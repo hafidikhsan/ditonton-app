@@ -9,4 +9,5 @@ abstract class SeriesRepository {
   Future<Either<Failure, List<Series>>> getTopRatedSeries();
   Future<Either<Failure, SeriesDetail>> getSeriesDetail(int id);
   Future<Either<Failure, List<Series>>> getSeriesRecommendations(int id);
+  Future<Either<Failure, List<Series>>> searchSeries(String query);
 }

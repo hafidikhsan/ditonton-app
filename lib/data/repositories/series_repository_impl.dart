@@ -74,4 +74,16 @@ class SeriesRepositoryImpl implements SeriesRepository {
       return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Series>>> searchSeries(String query) async {
+    try {
+      final result = await remoteDataSource.searchSeries(query);
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
 }

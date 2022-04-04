@@ -19,6 +19,7 @@ import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/popular_series_notifier.dart';
 import 'package:ditonton/presentation/provider/series_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/series_list_notifier.dart';
+import 'package:ditonton/presentation/provider/series_search_notifier.dart';
 import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/top_rated_series_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieSearchNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<SeriesSearchNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
@@ -103,7 +107,13 @@ class MyApp extends StatelessWidget {
                 settings: settings,
               );
             case SearchPage.ROUTE_NAME:
-              return CupertinoPageRoute(builder: (_) => SearchPage());
+              final isMovie = settings.arguments as bool;
+              return MaterialPageRoute(
+                builder: (_) => SearchPage(isMovie: isMovie),
+                settings: settings,
+              );
+            // case SearchPage.ROUTE_NAME:
+            //   return CupertinoPageRoute(builder: (_) => SearchPage());
             case WatchlistMoviesPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => WatchlistMoviesPage());
             case HomeSeriesPage.ROUTE_NAME:

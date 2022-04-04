@@ -86,14 +86,7 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         title: Text('Ditonton'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
-            },
-            icon: Icon(Icons.search),
-          )
-        ],
+        //Harusnya Search Menu yang Multi
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

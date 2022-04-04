@@ -88,7 +88,12 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
           // Searching masih di movie belum di series
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
+              Navigator.pushNamed(
+                context,
+                SearchPage.ROUTE_NAME,
+                arguments: false,
+              );
+              // Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
             },
             icon: Icon(Icons.search),
           )
