@@ -47,6 +47,7 @@ class SearchPage extends StatelessWidget {
             (isMovie)
                 ? Consumer<MovieSearchNotifier>(
                     builder: (context, data, child) {
+                      print(data.state);
                       if (data.state == RequestState.Loading) {
                         return Center(
                           child: CircularProgressIndicator(),
@@ -63,7 +64,7 @@ class SearchPage extends StatelessWidget {
                             itemCount: result.length,
                           ),
                         );
-                      } else if (data.state == RequestState.Empty) {
+                      } else if (data.state == RequestState.Error) {
                         return Expanded(
                           child: Center(
                             child: Text(
@@ -97,7 +98,7 @@ class SearchPage extends StatelessWidget {
                             itemCount: result.length,
                           ),
                         );
-                      } else if (data.state == RequestState.Empty) {
+                      } else if (data.state == RequestState.Error) {
                         return Expanded(
                           child: Center(
                             child: Text(

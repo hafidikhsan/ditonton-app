@@ -34,7 +34,7 @@ class MovieSearchNotifier extends ChangeNotifier {
           _state = RequestState.Loaded;
           notifyListeners();
         } else {
-          _state = RequestState.Empty;
+          _state = RequestState.Error;
           notifyListeners();
         }
       },

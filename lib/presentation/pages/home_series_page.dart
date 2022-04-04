@@ -85,7 +85,6 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
       appBar: AppBar(
         title: Text('Series'),
         actions: [
-          // Searching masih di movie belum di series
           IconButton(
             onPressed: () {
               Navigator.pushNamed(
@@ -93,7 +92,6 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
                 SearchPage.ROUTE_NAME,
                 arguments: false,
               );
-              // Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
             },
             icon: Icon(Icons.search),
           )

@@ -92,7 +92,6 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 SearchPage.ROUTE_NAME,
                 arguments: true,
               );
-              // Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
             },
             icon: Icon(Icons.search),
           )
