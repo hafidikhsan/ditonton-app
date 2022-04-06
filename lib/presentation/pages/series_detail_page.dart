@@ -44,6 +44,7 @@ class _SeriesDetailPageState extends State<SeriesDetailPage> {
               child: DetailContent(
                 series,
                 provider.seriesRecommendations,
+                provider.isAddedToWatchlist,
               ),
             );
           } else {
@@ -58,8 +59,9 @@ class _SeriesDetailPageState extends State<SeriesDetailPage> {
 class DetailContent extends StatelessWidget {
   final SeriesDetail series;
   final List<Series> recommendations;
+  final bool isAddedWatchlist;
 
-  DetailContent(this.series, this.recommendations);
+  DetailContent(this.series, this.recommendations, this.isAddedWatchlist);
 
   @override
   Widget build(BuildContext context) {
@@ -102,11 +104,48 @@ class DetailContent extends StatelessWidget {
                               style: kHeading5,
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                if (!isAddedWatchlist) {
+                                  await Provider.of<SeriesDetailNotifier>(
+                                          context,
+                                          listen: false)
+                                      .addWatchlist(series);
+                                } else {
+                                  await Provider.of<SeriesDetailNotifier>(
+                                          context,
+                                          listen: false)
+                                      .removeFromWatchlist(series);
+                                }
+
+                                final message =
+                                    Provider.of<SeriesDetailNotifier>(context,
+                                            listen: false)
+                                        .watchlistMessage;
+
+                                if (message ==
+                                        SeriesDetailNotifier
+                                            .watchlistAddSuccessMessage ||
+                                    message ==
+                                        SeriesDetailNotifier
+                                            .watchlistRemoveSuccessMessage) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(message)));
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text(message),
+                                        );
+                                      });
+                                }
+                              },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.add),
+                                  isAddedWatchlist
+                                      ? Icon(Icons.check)
+                                      : Icon(Icons.add),
                                   Text('Watchlist'),
                                 ],
                               ),

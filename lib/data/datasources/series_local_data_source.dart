@@ -2,17 +2,17 @@ import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/models/database_model.dart';
 
-abstract class MovieLocalDataSource {
+abstract class SeriesLocalDataSource {
   Future<String> insertWatchlist(DatabaseModel movie);
   Future<String> removeWatchlist(DatabaseModel movie);
-  Future<DatabaseModel?> getMovieById(int id);
+  Future<DatabaseModel?> getSeriesById(int id);
   Future<List<DatabaseModel>> getWatchlist();
 }
 
-class MovieLocalDataSourceImpl implements MovieLocalDataSource {
+class SeriesLocalDataSourceImpl implements SeriesLocalDataSource {
   final DatabaseHelper databaseHelper;
 
-  MovieLocalDataSourceImpl({required this.databaseHelper});
+  SeriesLocalDataSourceImpl({required this.databaseHelper});
 
   @override
   Future<String> insertWatchlist(DatabaseModel movie) async {
@@ -25,9 +25,9 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   }
 
   @override
-  Future<String> removeWatchlist(DatabaseModel movie) async {
+  Future<String> removeWatchlist(DatabaseModel series) async {
     try {
-      await databaseHelper.removeWatchlist(movie);
+      await databaseHelper.removeWatchlist(series);
       return 'Removed from Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
@@ -35,7 +35,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   }
 
   @override
-  Future<DatabaseModel?> getMovieById(int id) async {
+  Future<DatabaseModel?> getSeriesById(int id) async {
     final result = await databaseHelper.getById(id);
     if (result != null) {
       return DatabaseModel.fromMap(result);
