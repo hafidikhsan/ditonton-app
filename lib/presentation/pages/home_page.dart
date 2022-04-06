@@ -1,16 +1,16 @@
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/home_series_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/popular_series_page.dart';
-import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_series_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/presentation/provider/series_list_notifier.dart';
+import 'package:ditonton/presentation/widgets/movie_poster_list.dart';
+import 'package:ditonton/presentation/widgets/series_poster_list.dart';
+import 'package:ditonton/presentation/widgets/sub_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -86,7 +86,6 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         title: Text('Ditonton'),
-        //Harusnya Search Menu yang Multi
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -94,99 +93,74 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSubHeading(
+              SubHeading(
                 title: 'Popular Movie',
-                onTap: () =>
-                    Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  PopularMoviesPage.ROUTE_NAME,
+                ),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.popularMoviesState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+              Consumer<MovieListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.popularMoviesState;
+                  return PosterListMovie(
+                    data: data.popularMovies,
+                    state: state,
                   );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.popularMovies);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-              _buildSubHeading(
+                },
+              ),
+              SubHeading(
                 title: 'Top Rated Movie',
-                onTap: () =>
-                    Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  TopRatedMoviesPage.ROUTE_NAME,
+                ),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedMoviesState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+              Consumer<MovieListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.topRatedMoviesState;
+                  return PosterListMovie(
+                    data: data.topRatedMovies,
+                    state: state,
                   );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.topRatedMovies);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-              _buildSubHeading(
+                },
+              ),
+              SubHeading(
                 title: 'Popular Series',
-                onTap: () =>
-                    Navigator.pushNamed(context, PopularSeriesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  PopularSeriesPage.ROUTE_NAME,
+                ),
               ),
-              Consumer<SeriesListNotifier>(builder: (context, data, child) {
-                final state = data.popularSeriesState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+              Consumer<SeriesListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.popularSeriesState;
+                  return PosterListSeries(
+                    data: data.popularSeries,
+                    state: state,
                   );
-                } else if (state == RequestState.Loaded) {
-                  return SeriesList(data.popularSeries);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-              _buildSubHeading(
+                },
+              ),
+              SubHeading(
                 title: 'Top Rated Series',
-                onTap: () =>
-                    Navigator.pushNamed(context, TopRatedSeriesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  TopRatedSeriesPage.ROUTE_NAME,
+                ),
               ),
-              Consumer<SeriesListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedSeriesState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+              Consumer<SeriesListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.topRatedSeriesState;
+                  return PosterListSeries(
+                    data: data.topRatedSeries,
+                    state: state,
                   );
-                } else if (state == RequestState.Loaded) {
-                  return SeriesList(data.topRatedSeries);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+                },
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Row _buildSubHeading({required String title, required Function() onTap}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: kHeading6,
-        ),
-        InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

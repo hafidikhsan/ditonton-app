@@ -56,11 +56,13 @@ class DatabaseHelper {
 
   Future<int> insertWatchlist(DatabaseModel movie) async {
     final db = await database;
+
     return await db!.insert(_tblWatchlist, movie.toJson());
   }
 
   Future<int> removeWatchlist(DatabaseModel movie) async {
     final db = await database;
+
     return await db!.delete(
       _tblWatchlist,
       where: 'id = ?',

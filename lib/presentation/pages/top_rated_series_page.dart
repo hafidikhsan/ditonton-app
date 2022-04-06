@@ -24,7 +24,7 @@ class _TopRatedSeriesPageState extends State<TopRatedSeriesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Top Rated Movies'),
+        title: Text('Top Rated Series'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

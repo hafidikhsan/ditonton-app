@@ -26,6 +26,8 @@ class _SeriesDetailPageState extends State<SeriesDetailPage> {
     Future.microtask(() {
       Provider.of<SeriesDetailNotifier>(context, listen: false)
           .fetchSeriesDetail(widget.id);
+      Provider.of<SeriesDetailNotifier>(context, listen: false)
+          .loadWatchlistStatus(widget.id);
     });
   }
 
@@ -83,7 +85,9 @@ class DetailContent extends StatelessWidget {
               return Container(
                 decoration: BoxDecoration(
                   color: kRichBlack,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(16),
+                  ),
                 ),
                 padding: const EdgeInsets.only(
                   left: 16,
@@ -107,20 +111,21 @@ class DetailContent extends StatelessWidget {
                               onPressed: () async {
                                 if (!isAddedWatchlist) {
                                   await Provider.of<SeriesDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .addWatchlist(series);
+                                    context,
+                                    listen: false,
+                                  ).addWatchlist(series);
                                 } else {
                                   await Provider.of<SeriesDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .removeFromWatchlist(series);
+                                    context,
+                                    listen: false,
+                                  ).removeFromWatchlist(series);
                                 }
 
                                 final message =
-                                    Provider.of<SeriesDetailNotifier>(context,
-                                            listen: false)
-                                        .watchlistMessage;
+                                    Provider.of<SeriesDetailNotifier>(
+                                  context,
+                                  listen: false,
+                                ).watchlistMessage;
 
                                 if (message ==
                                         SeriesDetailNotifier
@@ -129,15 +134,19 @@ class DetailContent extends StatelessWidget {
                                         SeriesDetailNotifier
                                             .watchlistRemoveSuccessMessage) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(message)));
+                                    SnackBar(
+                                      content: Text(message),
+                                    ),
+                                  );
                                 } else {
                                   showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text(message),
-                                        );
-                                      });
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        content: Text(message),
+                                      );
+                                    },
+                                  );
                                 }
                               },
                               child: Row(
@@ -252,9 +261,7 @@ class DetailContent extends StatelessWidget {
                 ),
               );
             },
-            // initialChildSize: 0.5,
             minChildSize: 0.25,
-            // maxChildSize: 1.0,
           ),
         ),
         Padding(

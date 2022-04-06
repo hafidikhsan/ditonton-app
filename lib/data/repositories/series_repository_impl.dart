@@ -93,10 +93,11 @@ class SeriesRepositoryImpl implements SeriesRepository {
   }
 
   @override
-  Future<Either<Failure, String>> saveWatchlist(SeriesDetail movie) async {
+  Future<Either<Failure, String>> saveWatchlist(SeriesDetail series) async {
     try {
-      final result = await localDataSource
-          .insertWatchlist(DatabaseModel.fromSeriesEntity(movie));
+      final result = await localDataSource.insertWatchlist(
+        DatabaseModel.fromSeriesEntity(series),
+      );
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
@@ -106,10 +107,11 @@ class SeriesRepositoryImpl implements SeriesRepository {
   }
 
   @override
-  Future<Either<Failure, String>> removeWatchlist(SeriesDetail movie) async {
+  Future<Either<Failure, String>> removeWatchlist(SeriesDetail series) async {
     try {
-      final result = await localDataSource
-          .removeWatchlist(DatabaseModel.fromSeriesEntity(movie));
+      final result = await localDataSource.removeWatchlist(
+        DatabaseModel.fromSeriesEntity(series),
+      );
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
@@ -119,12 +121,7 @@ class SeriesRepositoryImpl implements SeriesRepository {
   @override
   Future<bool> isAddedToWatchlist(int id) async {
     final result = await localDataSource.getSeriesById(id);
-    return result != null;
-  }
 
-  @override
-  Future<Either<Failure, List<Database>>> getWatchlistMovies() async {
-    final result = await localDataSource.getWatchlist();
-    return Right(result.map((data) => data.toEntity()).toList());
+    return result != null;
   }
 }

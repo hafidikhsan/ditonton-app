@@ -16,6 +16,11 @@ class Database extends Equatable {
   final int isMovie;
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [id, title, posterPath, overview, isMovie];
+  List<Object?> get props => [
+        id,
+        title,
+        posterPath,
+        overview,
+        isMovie,
+      ];
 }

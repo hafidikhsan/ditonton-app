@@ -15,9 +15,9 @@ class SeriesLocalDataSourceImpl implements SeriesLocalDataSource {
   SeriesLocalDataSourceImpl({required this.databaseHelper});
 
   @override
-  Future<String> insertWatchlist(DatabaseModel movie) async {
+  Future<String> insertWatchlist(DatabaseModel series) async {
     try {
-      await databaseHelper.insertWatchlist(movie);
+      await databaseHelper.insertWatchlist(series);
       return 'Added to Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
@@ -37,6 +37,7 @@ class SeriesLocalDataSourceImpl implements SeriesLocalDataSource {
   @override
   Future<DatabaseModel?> getSeriesById(int id) async {
     final result = await databaseHelper.getById(id);
+
     if (result != null) {
       return DatabaseModel.fromMap(result);
     } else {
@@ -47,6 +48,7 @@ class SeriesLocalDataSourceImpl implements SeriesLocalDataSource {
   @override
   Future<List<DatabaseModel>> getWatchlist() async {
     final result = await databaseHelper.getWatchlist();
+
     return result.map((data) => DatabaseModel.fromMap(data)).toList();
   }
 }

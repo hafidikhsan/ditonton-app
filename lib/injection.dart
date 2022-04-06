@@ -108,7 +108,7 @@ void init() {
   );
   locator.registerFactory(
     () => WatchlistMovieNotifier(
-      getWatchlistMovies: locator(),
+      getWatchlist: locator(),
     ),
   );
 
@@ -131,7 +131,7 @@ void init() {
   locator.registerLazySingleton(() => GetWatchListStatusSeries(locator()));
   locator.registerLazySingleton(() => SaveWatchlistSeries(locator()));
   locator.registerLazySingleton(() => RemoveWatchlistSeries(locator()));
-  locator.registerLazySingleton(() => GetWatchlistMovies(locator()));
+  locator.registerLazySingleton(() => GetWatchlist(locator()));
 
   // repository
   locator.registerLazySingleton<MovieRepository>(

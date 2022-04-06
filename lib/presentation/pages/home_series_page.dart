@@ -1,15 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/popular_series_page.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
-import 'package:ditonton/presentation/pages/series_detail_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_series_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/provider/series_list_notifier.dart';
+import 'package:ditonton/presentation/widgets/series_poster_list.dart';
+import 'package:ditonton/presentation/widgets/sub_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -55,7 +53,10 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
               leading: Icon(Icons.movie),
               title: Text('Movies'),
               onTap: () {
-                Navigator.pushNamed(context, HomeMoviePage.ROUTE_NAME);
+                Navigator.pushNamed(
+                  context,
+                  HomeMoviePage.ROUTE_NAME,
+                );
               },
             ),
             ListTile(
@@ -69,12 +70,18 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
               leading: Icon(Icons.save_alt),
               title: Text('Watchlist'),
               onTap: () {
-                Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+                Navigator.pushNamed(
+                  context,
+                  WatchlistMoviesPage.ROUTE_NAME,
+                );
               },
             ),
             ListTile(
               onTap: () {
-                Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
+                Navigator.pushNamed(
+                  context,
+                  AboutPage.ROUTE_NAME,
+                );
               },
               leading: Icon(Icons.info_outline),
               title: Text('About'),
@@ -107,120 +114,50 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
                 'Now Playing',
                 style: kHeading6,
               ),
-              Consumer<SeriesListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+              Consumer<SeriesListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.nowPlayingState;
+                  return PosterListSeries(
+                    data: data.nowPlayingSeries,
+                    state: state,
                   );
-                } else if (state == RequestState.Loaded) {
-                  return SeriesList(data.nowPlayingSeries);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-              //Harusnya diganti kelas
-              _buildSubHeading(
+                },
+              ),
+              SubHeading(
                 title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, PopularSeriesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  PopularSeriesPage.ROUTE_NAME,
+                ),
               ),
-              Consumer<SeriesListNotifier>(builder: (context, data, child) {
-                final state = data.popularSeriesState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+              Consumer<SeriesListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.popularSeriesState;
+                  return PosterListSeries(
+                    data: data.popularSeries,
+                    state: state,
                   );
-                } else if (state == RequestState.Loaded) {
-                  return SeriesList(data.popularSeries);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-              _buildSubHeading(
+                },
+              ),
+              SubHeading(
                 title: 'Top Rated',
-                onTap: () =>
-                    Navigator.pushNamed(context, TopRatedSeriesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  TopRatedSeriesPage.ROUTE_NAME,
+                ),
               ),
-              Consumer<SeriesListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedSeriesState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+              Consumer<SeriesListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.topRatedSeriesState;
+                  return PosterListSeries(
+                    data: data.topRatedSeries,
+                    state: state,
                   );
-                } else if (state == RequestState.Loaded) {
-                  return SeriesList(data.topRatedSeries);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+                },
+              ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Row _buildSubHeading({required String title, required Function() onTap}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: kHeading6,
-        ),
-        InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class SeriesList extends StatelessWidget {
-  final List<Series> series;
-
-  SeriesList(this.series);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          final tvSeries = series[index];
-          return Container(
-            padding: const EdgeInsets.all(8),
-            child: InkWell(
-              onTap: () {
-                // Detail Page
-                Navigator.pushNamed(
-                  context,
-                  SeriesDetailPage.ROUTE_NAME,
-                  arguments: tvSeries.id,
-                );
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${tvSeries.posterPath}',
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),
-            ),
-          );
-        },
-        itemCount: series.length,
       ),
     );
   }

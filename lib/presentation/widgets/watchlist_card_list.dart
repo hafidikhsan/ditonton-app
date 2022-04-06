@@ -6,9 +6,9 @@ import 'package:ditonton/presentation/pages/series_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class WatchlistCard extends StatelessWidget {
-  final Database movie;
+  final Database watchlist;
 
-  WatchlistCard(this.movie);
+  WatchlistCard(this.watchlist);
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +16,16 @@ class WatchlistCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () {
-          (movie.isMovie == 1)
+          (watchlist.isMovie == 1)
               ? Navigator.pushNamed(
                   context,
                   MovieDetailPage.ROUTE_NAME,
-                  arguments: movie.id,
+                  arguments: watchlist.id,
                 )
               : Navigator.pushNamed(
                   context,
                   SeriesDetailPage.ROUTE_NAME,
-                  arguments: movie.id,
+                  arguments: watchlist.id,
                 );
         },
         child: Stack(
@@ -42,14 +42,14 @@ class WatchlistCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      movie.title ?? '-',
+                      watchlist.title ?? '-',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
                     SizedBox(height: 16),
                     Text(
-                      movie.overview ?? '-',
+                      watchlist.overview ?? '-',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -64,7 +64,7 @@ class WatchlistCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${watchlist.posterPath}',
                   width: 80,
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),

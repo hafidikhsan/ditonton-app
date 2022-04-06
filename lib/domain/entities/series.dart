@@ -15,17 +15,17 @@ class Series extends Equatable {
     required this.voteCount,
   });
 
-  String? backdropPath;
-  String? firstAir;
-  List<int>? genreIds;
-  int? id;
-  String? name;
-  String? originalName;
-  String? overview;
-  double? popularity;
-  String? posterPath;
-  double? voteAverage;
-  int? voteCount;
+  final String? backdropPath;
+  final String? firstAir;
+  final List<int>? genreIds;
+  final int? id;
+  final String? name;
+  final String? originalName;
+  final String? overview;
+  final double? popularity;
+  final String? posterPath;
+  final double? voteAverage;
+  final int? voteCount;
 
   @override
   List<Object?> get props => [

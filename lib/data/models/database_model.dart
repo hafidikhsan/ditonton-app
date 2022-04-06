@@ -61,6 +61,11 @@ class DatabaseModel extends Equatable {
   }
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [id, title, posterPath, overview, isMovie];
+  List<Object?> get props => [
+        id,
+        title,
+        posterPath,
+        overview,
+        isMovie,
+      ];
 }

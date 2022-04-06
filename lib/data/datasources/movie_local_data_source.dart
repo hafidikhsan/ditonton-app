@@ -37,6 +37,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<DatabaseModel?> getMovieById(int id) async {
     final result = await databaseHelper.getById(id);
+
     if (result != null) {
       return DatabaseModel.fromMap(result);
     } else {
@@ -47,6 +48,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<List<DatabaseModel>> getWatchlist() async {
     final result = await databaseHelper.getWatchlist();
+
     return result.map((data) => DatabaseModel.fromMap(data)).toList();
   }
 }
