@@ -15,6 +15,7 @@ class SeriesDetail extends Equatable {
     required this.posterPath,
     required this.voteAverage,
     required this.voteCount,
+    required this.seasons,
   });
 
   final bool adult;
@@ -29,6 +30,7 @@ class SeriesDetail extends Equatable {
   final String overview;
   final double voteAverage;
   final int voteCount;
+  final List<int> seasons;
 
   @override
   List<Object?> get props => [
@@ -44,5 +46,6 @@ class SeriesDetail extends Equatable {
         overview,
         voteAverage,
         voteCount,
+        seasons,
       ];
 }

@@ -245,6 +245,43 @@ class DetailContent extends StatelessWidget {
                                 }
                               },
                             ),
+                            SizedBox(height: 16),
+                            Text(
+                              'Seasons',
+                              style: kHeading6,
+                            ),
+                            Consumer<SeriesDetailNotifier>(
+                              builder: (context, data, child) {
+                                return SizedBox(
+                                  width: 130,
+                                  child: DropdownButton(
+                                    value: data.seasonValue,
+                                    style: const TextStyle(color: Colors.white),
+                                    elevation: 16,
+                                    items: data.season
+                                        .map<DropdownMenuItem<int>>(
+                                            (int value) {
+                                      return DropdownMenuItem<int>(
+                                        value: value,
+                                        child: Text("Season $value"),
+                                      );
+                                    }).toList(),
+                                    isExpanded: true,
+                                    onChanged: (final int? newValue) {
+                                      data.selectedSeason = newValue!;
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                            Consumer<SeriesDetailNotifier>(
+                              builder: (context, data, child) {
+                                return Text(
+                                  data.seasonValue.toString(),
+                                  style: kHeading6,
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),

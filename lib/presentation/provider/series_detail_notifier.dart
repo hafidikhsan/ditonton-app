@@ -30,6 +30,12 @@ class SeriesDetailNotifier extends ChangeNotifier {
   late SeriesDetail _series;
   SeriesDetail get series => _series;
 
+  late List<int> _season;
+  List<int> get season => _season;
+
+  late int _seasonValue;
+  int get seasonValue => _seasonValue;
+
   RequestState _seriesState = RequestState.Empty;
   RequestState get seriesState => _seriesState;
 
@@ -59,6 +65,8 @@ class SeriesDetailNotifier extends ChangeNotifier {
       (series) {
         _recommendationState = RequestState.Loading;
         _series = series;
+        _season = series.seasons;
+        _seasonValue = _season[0];
         notifyListeners();
         recommendationResult.fold(
           (failure) {
@@ -74,6 +82,11 @@ class SeriesDetailNotifier extends ChangeNotifier {
         notifyListeners();
       },
     );
+  }
+
+  set selectedSeason(final int value) {
+    this._seasonValue = value;
+    notifyListeners();
   }
 
   String _watchlistMessage = '';
