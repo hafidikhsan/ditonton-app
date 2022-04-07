@@ -52,8 +52,8 @@ class SeriesModel extends Equatable {
         "overview": overview,
         "popularity": popularity,
         "poster_path": posterPath,
-        "voteAverage": voteAverage,
-        "vote_average": voteCount,
+        "vote_average": voteAverage,
+        "vote_count": voteCount,
       };
 
   Series toEntity() {
