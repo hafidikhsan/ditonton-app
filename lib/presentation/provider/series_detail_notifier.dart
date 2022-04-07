@@ -1,6 +1,8 @@
+import 'package:ditonton/domain/entities/episodes.dart';
 import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/domain/entities/series_detail.dart';
 import 'package:ditonton/domain/usecases/get_series_detail.dart';
+import 'package:ditonton/domain/usecases/get_series_episodes.dart';
 import 'package:ditonton/domain/usecases/get_series_recomendation.dart';
 import 'package:ditonton/domain/usecases/get_watchlist_status_series.dart';
 import 'package:ditonton/domain/usecases/remove_watchlist_series.dart';
@@ -15,6 +17,7 @@ class SeriesDetailNotifier extends ChangeNotifier {
 
   final GetSeriesDetail getSeriesDetail;
   final GetSeriesRecommendations getSeriesRecommendations;
+  final GetSeriesEpisodes getSeriesEpisodes;
   final GetWatchListStatusSeries getWatchListStatus;
   final SaveWatchlistSeries saveWatchlist;
   final RemoveWatchlistSeries removeWatchlist;
@@ -22,6 +25,7 @@ class SeriesDetailNotifier extends ChangeNotifier {
   SeriesDetailNotifier({
     required this.getSeriesDetail,
     required this.getSeriesRecommendations,
+    required this.getSeriesEpisodes,
     required this.getWatchListStatus,
     required this.saveWatchlist,
     required this.removeWatchlist,
@@ -36,6 +40,9 @@ class SeriesDetailNotifier extends ChangeNotifier {
   late int _seasonValue;
   int get seasonValue => _seasonValue;
 
+  late int _id;
+  int get id => _id;
+
   RequestState _seriesState = RequestState.Empty;
   RequestState get seriesState => _seriesState;
 
@@ -44,6 +51,12 @@ class SeriesDetailNotifier extends ChangeNotifier {
 
   RequestState _recommendationState = RequestState.Empty;
   RequestState get recommendationState => _recommendationState;
+
+  List<Episodes> _seriesEpisodes = [];
+  List<Episodes> get seriesEpisodes => _seriesEpisodes;
+
+  RequestState _episodesState = RequestState.Empty;
+  RequestState get episodesState => _episodesState;
 
   String _message = '';
   String get message => _message;
@@ -67,6 +80,7 @@ class SeriesDetailNotifier extends ChangeNotifier {
         _series = series;
         _season = series.seasons;
         _seasonValue = _season[0];
+        _id = id;
         notifyListeners();
         recommendationResult.fold(
           (failure) {
@@ -76,6 +90,8 @@ class SeriesDetailNotifier extends ChangeNotifier {
           (movies) {
             _recommendationState = RequestState.Loaded;
             _seriesRecommendations = movies;
+            notifyListeners();
+            getEpisodes();
           },
         );
         _seriesState = RequestState.Loaded;
@@ -84,8 +100,27 @@ class SeriesDetailNotifier extends ChangeNotifier {
     );
   }
 
+  Future<void> getEpisodes() async {
+    _episodesState = RequestState.Loading;
+    notifyListeners();
+    final episodesResult = await getSeriesEpisodes.execute(_id, _seasonValue);
+    episodesResult.fold(
+      (failure) {
+        _episodesState = RequestState.Error;
+        _message = failure.message;
+        notifyListeners();
+      },
+      (movies) {
+        _episodesState = RequestState.Loaded;
+        _seriesEpisodes = movies;
+        notifyListeners();
+      },
+    );
+  }
+
   set selectedSeason(final int value) {
     this._seasonValue = value;
+    getEpisodes();
     notifyListeners();
   }
 

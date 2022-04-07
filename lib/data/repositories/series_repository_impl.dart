@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:ditonton/data/datasources/series_local_data_source.dart';
 import 'package:ditonton/data/datasources/series_remote_data_source.dart';
 import 'package:ditonton/data/models/database_model.dart';
-import 'package:ditonton/domain/entities/database.dart';
+import 'package:ditonton/domain/entities/episodes.dart';
 import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/domain/entities/series_detail.dart';
 import 'package:ditonton/domain/repositories/series_repository.dart';
@@ -72,6 +72,19 @@ class SeriesRepositoryImpl implements SeriesRepository {
   Future<Either<Failure, List<Series>>> getSeriesRecommendations(int id) async {
     try {
       final result = await remoteDataSource.getSeriesRecommendations(id);
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Episodes>>> getSeriesEpisodes(
+      int id, int seasons) async {
+    try {
+      final result = await remoteDataSource.getSeriesEpisodes(id, seasons);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure(''));

@@ -14,6 +14,7 @@ import 'package:ditonton/domain/usecases/get_now_playing_series.dart';
 import 'package:ditonton/domain/usecases/get_popular_movies.dart';
 import 'package:ditonton/domain/usecases/get_popular_series.dart';
 import 'package:ditonton/domain/usecases/get_series_detail.dart';
+import 'package:ditonton/domain/usecases/get_series_episodes.dart';
 import 'package:ditonton/domain/usecases/get_series_recomendation.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_movies.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_series.dart';
@@ -55,6 +56,7 @@ void init() {
     () => SeriesDetailNotifier(
       getSeriesDetail: locator(),
       getSeriesRecommendations: locator(),
+      getSeriesEpisodes: locator(),
       getWatchListStatus: locator(),
       saveWatchlist: locator(),
       removeWatchlist: locator(),
@@ -123,6 +125,7 @@ void init() {
   locator.registerLazySingleton(() => GetTopRatedMovies(locator()));
   locator.registerLazySingleton(() => GetMovieDetail(locator()));
   locator.registerLazySingleton(() => GetMovieRecommendations(locator()));
+  locator.registerLazySingleton(() => GetSeriesEpisodes(locator()));
   locator.registerLazySingleton(() => SearchMovies(locator()));
   locator.registerLazySingleton(() => SearchSeries(locator()));
   locator.registerLazySingleton(() => GetWatchListStatus(locator()));

@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:ditonton/data/models/episode_respons_model.dart';
+import 'package:ditonton/data/models/episodes_model.dart';
 import 'package:ditonton/data/models/series_detail_model.dart';
 import 'package:ditonton/data/models/series_model.dart';
 import 'package:ditonton/data/models/series_response.dart';
@@ -11,6 +13,7 @@ abstract class SeriesRemoteDataSource {
   Future<List<SeriesModel>> getTopRatedSeries();
   Future<SeriesDetailResponse> getSeriesDetail(int id);
   Future<List<SeriesModel>> getSeriesRecommendations(int id);
+  Future<List<Episode>> getSeriesEpisodes(int id, int seasons);
   Future<List<SeriesModel>> searchSeries(String query);
 }
 
@@ -76,6 +79,18 @@ class SeriesRemoteDataSourceImpl implements SeriesRemoteDataSource {
 
     if (response.statusCode == 200) {
       return SeriesResponse.fromJson(json.decode(response.body)).seriesList;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<Episode>> getSeriesEpisodes(int id, int seasons) async {
+    final response = await client
+        .get(Uri.parse('$BASE_URL/tv/$id/season/$seasons?$API_KEY'));
+
+    if (response.statusCode == 200) {
+      return EpisodesRespons.fromJson(json.decode(response.body)).episodes;
     } else {
       throw ServerException();
     }
