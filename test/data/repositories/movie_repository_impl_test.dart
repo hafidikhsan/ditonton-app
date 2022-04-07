@@ -401,10 +401,10 @@ void main() {
   group('get watchlist movies', () {
     test('should return list of Movies', () async {
       // arrange
-      when(mockLocalDataSource.getWatchlistMovies())
+      when(mockLocalDataSource.getWatchlist())
           .thenAnswer((_) async => [testMovieTable]);
       // act
-      final result = await repository.getWatchlistMovies();
+      final result = await repository.getWatchlist();
       // assert
       final resultList = result.getOrElse(() => []);
       expect(resultList, [testWatchlistMovie]);

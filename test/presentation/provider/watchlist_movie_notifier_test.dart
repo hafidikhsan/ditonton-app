@@ -10,17 +10,17 @@ import 'package:mockito/mockito.dart';
 import '../../dummy_data/dummy_objects.dart';
 import 'watchlist_movie_notifier_test.mocks.dart';
 
-@GenerateMocks([GetWatchlistMovies])
+@GenerateMocks([GetWatchlist])
 void main() {
+  late MockGetWatchlist mockGetWatchlistMovies;
   late WatchlistMovieNotifier provider;
-  late MockGetWatchlistMovies mockGetWatchlistMovies;
   late int listenerCallCount;
 
   setUp(() {
     listenerCallCount = 0;
-    mockGetWatchlistMovies = MockGetWatchlistMovies();
+    mockGetWatchlistMovies = MockGetWatchlist();
     provider = WatchlistMovieNotifier(
-      getWatchlistMovies: mockGetWatchlistMovies,
+      getWatchlist: mockGetWatchlistMovies,
     )..addListener(() {
         listenerCallCount += 1;
       });
@@ -34,7 +34,7 @@ void main() {
     await provider.fetchWatchlistMovies();
     // assert
     expect(provider.watchlistState, RequestState.Loaded);
-    expect(provider.watchlistMovies, [testWatchlistMovie]);
+    expect(provider.watchlist, [testWatchlistMovie]);
     expect(listenerCallCount, 2);
   });
 
