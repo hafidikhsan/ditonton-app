@@ -7,12 +7,7 @@
         2
     ],
     "first_air_date": "2021-09-03",
-    "genres": [
-        {
-            "id": 2,
-            "name": "Reality"
-        }
-    ],
+    "genres": [],
     "homepage": "path",
     "id": 1,
     "in_production": true,
@@ -72,17 +67,7 @@
             "name": "United States of America"
         }
     ],
-    "seasons": [
-        {
-            "air_date": "2021-09-03",
-            "episode_count": 1,
-            "id": 11,
-            "name": "Season 1",
-            "overview": "overview.",
-            "poster_path": "/path.jpg",
-            "season_number": 1
-        }
-    ],
+    "seasons": [],
     "spoken_languages": [
         {
             "english_name": "English",

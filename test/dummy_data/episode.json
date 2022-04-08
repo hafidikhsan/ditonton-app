@@ -1,0 +1,42 @@
+{
+    "air_date": "2022-03-30",
+    "episode_number": 1,
+    "crew": [
+      {
+        "job": "Writer",
+        "department": "Writing",
+        "credit_id": "615da262d14443004364e8d1",
+        "adult": false,
+        "gender": 2,
+        "id": 1147923,
+        "known_for_department": "Writing",
+        "name": "Jeremy Slater",
+        "original_name": "Jeremy Slater",
+        "popularity": 5.809,
+        "profile_path": "/fQKd49lOrhU80PQla8mmx3vSR20.jpg"
+      }
+    ],
+    "guest_stars": [
+      {
+        "character": "Donna",
+        "credit_id": "62440015c50ad2005cdeb4f9",
+        "order": 1,
+        "adult": false,
+        "gender": 1,
+        "id": 1747175,
+        "known_for_department": "Acting",
+        "name": "Lucy Thackeray",
+        "original_name": "Lucy Thackeray",
+        "popularity": 2.874,
+        "profile_path": "/xYgQ9b2EJsSYaoNgNklgB6NPsQC.jpg"
+      }
+    ],
+    "id": 2239811,
+    "name": "The Goldfish Problem",
+    "overview": "Steven Grant learns that he may be a superhero, but may also share a body with a ruthless mercenary.",
+    "production_code": "",
+    "season_number": 1,
+    "still_path": "/uA81REU7p7bniOQfplpbGIMWCe.jpg",
+    "vote_average": 7.882,
+    "vote_count": 17
+  }

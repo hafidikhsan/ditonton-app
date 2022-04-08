@@ -17,4 +17,33 @@ void main() {
     final result = tGenreModel.toEntity();
     expect(result, tGenre);
   });
+
+  group('fromJson', () {
+    test('should return a valid model from JSON', () async {
+      // arrange
+      final jsonMap = {
+        "id": 1,
+        "name": "Action",
+      };
+      // act
+      final result = GenreModel.fromJson(jsonMap);
+      // assert
+      expect(result, tGenreModel);
+    });
+  });
+
+  group('toJson', () {
+    test('should return a JSON map containing proper data', () async {
+      // arrange
+
+      // act
+      final result = tGenreModel.toJson();
+      // assert
+      final jsonMap = {
+        "id": 1,
+        "name": "Action",
+      };
+      expect(result, jsonMap);
+    });
+  });
 }

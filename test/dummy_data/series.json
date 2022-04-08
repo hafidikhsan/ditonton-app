@@ -1,0 +1,13 @@
+{
+    "backdrop_path": "backdropPath",
+    "first_air_date": "first air",
+    "genre_ids": [1, 2, 3],
+    "id": 1,
+    "name": "Name",
+    "original_name": "originalName",
+    "overview": "overview",
+    "popularity": 1,
+    "poster_path": "posterPath",
+    "vote_average": 1,
+    "vote_count": 1
+}

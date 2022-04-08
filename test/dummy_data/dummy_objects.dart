@@ -1,8 +1,10 @@
 import 'package:ditonton/data/models/database_model.dart';
 import 'package:ditonton/domain/entities/database.dart';
+import 'package:ditonton/domain/entities/episodes.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/series_detail.dart';
 
 final testMovie = Database(
   id: 557,
@@ -28,6 +30,22 @@ final testMovieDetail = MovieDetail(
   title: 'title',
   voteAverage: 1,
   voteCount: 1,
+);
+
+final testSeriesDetail = SeriesDetail(
+  adult: false,
+  backdropPath: 'backdropPath',
+  genres: [Genre(id: 1, name: 'Action')],
+  id: 1,
+  overview: 'overview',
+  posterPath: 'posterPath',
+  voteAverage: 1,
+  voteCount: 1,
+  firstAir: '2022-04-08',
+  name: 'title',
+  originalName: 'Original Name',
+  popularity: 1,
+  seasons: [],
 );
 
 final testWatchlistMovie = Database(
