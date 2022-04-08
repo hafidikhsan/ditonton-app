@@ -46,6 +46,22 @@ final testSeriesDetail = SeriesDetail(
   seasons: [],
 );
 
+final tSeriesDetail = SeriesDetail(
+  adult: false,
+  backdropPath: 'backdropPath',
+  genres: [Genre(id: 1, name: 'Action')],
+  id: 1,
+  overview: 'overview',
+  posterPath: 'posterPath',
+  voteAverage: 1,
+  voteCount: 1,
+  firstAir: '2022-04-08',
+  name: 'title',
+  originalName: 'Original Name',
+  popularity: 1,
+  seasons: [1],
+);
+
 final testWatchlistMovie = Database(
   id: 1,
   title: 'title',
