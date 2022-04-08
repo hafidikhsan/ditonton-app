@@ -45,6 +45,20 @@ void main() {
   final tQuery = 'spiderman';
 
   group('search movies', () {
+    test('initialState should be Empty', () {
+      expect(provider.state, equals(RequestState.Empty));
+    });
+
+    test('should get data from the usecase', () async {
+      // arrange
+      when(mockSearchMovies.execute(tQuery))
+          .thenAnswer((_) async => Right(tMovieList));
+      // act
+      provider.fetchMovieSearch(tQuery);
+      // assert
+      verify(mockSearchMovies.execute(tQuery));
+    });
+
     test('should change state to loading when usecase is called', () async {
       // arrange
       when(mockSearchMovies.execute(tQuery))

@@ -102,6 +102,20 @@ void main() {
   });
 
   group('popular movies', () {
+    test('initialState should be Empty', () {
+      expect(provider.popularMoviesState, equals(RequestState.Empty));
+    });
+
+    test('should get data from the usecase', () async {
+      // arrange
+      when(mockGetPopularMovies.execute())
+          .thenAnswer((_) async => Right(tMovieList));
+      // act
+      provider.fetchPopularMovies();
+      // assert
+      verify(mockGetPopularMovies.execute());
+    });
+
     test('should change state to loading when usecase is called', () async {
       // arrange
       when(mockGetPopularMovies.execute())
@@ -140,6 +154,20 @@ void main() {
   });
 
   group('top rated movies', () {
+    test('initialState should be Empty', () {
+      expect(provider.topRatedMoviesState, equals(RequestState.Empty));
+    });
+
+    test('should get data from the usecase', () async {
+      // arrange
+      when(mockGetTopRatedMovies.execute())
+          .thenAnswer((_) async => Right(tMovieList));
+      // act
+      provider.fetchTopRatedMovies();
+      // assert
+      verify(mockGetTopRatedMovies.execute());
+    });
+
     test('should change state to loading when usecase is called', () async {
       // arrange
       when(mockGetTopRatedMovies.execute())

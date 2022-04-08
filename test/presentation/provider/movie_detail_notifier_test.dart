@@ -76,6 +76,10 @@ void main() {
   }
 
   group('Get Movie Detail', () {
+    test('initialState should be Empty', () {
+      expect(provider.movieState, equals(RequestState.Empty));
+    });
+
     test('should get data from the usecase', () async {
       // arrange
       _arrangeUsecase();
@@ -120,6 +124,10 @@ void main() {
   });
 
   group('Get Movie Recommendations', () {
+    test('initialState should be Empty', () {
+      expect(provider.recommendationState, equals(RequestState.Empty));
+    });
+
     test('should get data from the usecase', () async {
       // arrange
       _arrangeUsecase();

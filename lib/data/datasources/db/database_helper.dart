@@ -24,23 +24,22 @@ class DatabaseHelper {
 
   Future<Database> _initDb() async {
     final path = await getDatabasesPath();
-    final databasePath = '$path/ditonton.db';
+    final databasePath = '$path/watchlistDitonton.db';
 
     var db = await openDatabase(
       databasePath,
-      version: 2,
+      version: 1,
       onCreate: _onCreate,
-      onUpgrade: _onUpgrade,
     );
     return db;
   }
 
-  void _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion == 1) {
-      await db
-          .execute("ALTER TABLE $_tblWatchlist ADD COLUMN isMovie INTEGER;");
-    }
-  }
+  // void _onUpgrade(Database db, int oldVersion, int newVersion) async {
+  //   if (oldVersion == 1) {
+  //     await db
+  //         .execute("ALTER TABLE $_tblWatchlist ADD COLUMN isMovie INTEGER;");
+  //   }
+  // }
 
   void _onCreate(Database db, int version) async {
     await db.execute('''
@@ -48,6 +47,7 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY,
         title TEXT,
         overview TEXT,
+        isMovie INTEGER,
         posterPath TEXT
       );
     ''');

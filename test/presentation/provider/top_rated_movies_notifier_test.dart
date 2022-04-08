@@ -43,6 +43,20 @@ void main() {
 
   final tMovieList = <Movie>[tMovie];
 
+  test('initialState should be Empty', () {
+    expect(notifier.state, equals(RequestState.Empty));
+  });
+
+  test('should get data from the usecase', () async {
+    // arrange
+    when(mockGetTopRatedMovies.execute())
+        .thenAnswer((_) async => Right(tMovieList));
+    // act
+    notifier.fetchTopRatedMovies();
+    // assert
+    verify(mockGetTopRatedMovies.execute());
+  });
+
   test('should change state to loading when usecase is called', () async {
     // arrange
     when(mockGetTopRatedMovies.execute())

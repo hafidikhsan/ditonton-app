@@ -26,6 +26,20 @@ void main() {
       });
   });
 
+  test('initialState should be Empty', () {
+    expect(provider.watchlistState, equals(RequestState.Empty));
+  });
+
+  test('should get data from the usecase', () async {
+    // arrange
+    when(mockGetWatchlistMovies.execute())
+        .thenAnswer((_) async => Right([testWatchlistMovie]));
+    // act
+    provider.fetchWatchlistMovies();
+    // assert
+    verify(mockGetWatchlistMovies.execute());
+  });
+
   test('should change movies data when data is gotten successfully', () async {
     // arrange
     when(mockGetWatchlistMovies.execute())
