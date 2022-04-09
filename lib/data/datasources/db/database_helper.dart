@@ -34,13 +34,6 @@ class DatabaseHelper {
     return db;
   }
 
-  // void _onUpgrade(Database db, int oldVersion, int newVersion) async {
-  //   if (oldVersion == 1) {
-  //     await db
-  //         .execute("ALTER TABLE $_tblWatchlist ADD COLUMN isMovie INTEGER;");
-  //   }
-  // }
-
   void _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE  $_tblWatchlist (
