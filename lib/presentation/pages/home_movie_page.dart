@@ -46,7 +46,10 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               leading: Icon(Icons.home),
               title: Text('Home'),
               onTap: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushReplacementNamed(
+                  context,
+                  '/home',
+                );
               },
             ),
             ListTile(
@@ -60,19 +63,28 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               leading: Icon(Icons.tv),
               title: Text('Series'),
               onTap: () {
-                Navigator.pushNamed(context, HomeSeriesPage.ROUTE_NAME);
+                Navigator.pushReplacementNamed(
+                  context,
+                  HomeSeriesPage.ROUTE_NAME,
+                );
               },
             ),
             ListTile(
               leading: Icon(Icons.save_alt),
               title: Text('Watchlist'),
               onTap: () {
-                Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+                Navigator.pushReplacementNamed(
+                  context,
+                  WatchlistMoviesPage.ROUTE_NAME,
+                );
               },
             ),
             ListTile(
               onTap: () {
-                Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
+                Navigator.pushReplacementNamed(
+                  context,
+                  AboutPage.ROUTE_NAME,
+                );
               },
               leading: Icon(Icons.info_outline),
               title: Text('About'),

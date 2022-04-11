@@ -57,26 +57,38 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.movie),
               title: Text('Movies'),
               onTap: () {
-                Navigator.pushNamed(context, HomeMoviePage.ROUTE_NAME);
+                Navigator.pushReplacementNamed(
+                  context,
+                  HomeMoviePage.ROUTE_NAME,
+                );
               },
             ),
             ListTile(
               leading: Icon(Icons.tv),
               title: Text('Series'),
               onTap: () {
-                Navigator.pushNamed(context, HomeSeriesPage.ROUTE_NAME);
+                Navigator.pushReplacementNamed(
+                  context,
+                  HomeSeriesPage.ROUTE_NAME,
+                );
               },
             ),
             ListTile(
               leading: Icon(Icons.save_alt),
               title: Text('Watchlist'),
               onTap: () {
-                Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+                Navigator.pushReplacementNamed(
+                  context,
+                  WatchlistMoviesPage.ROUTE_NAME,
+                );
               },
             ),
             ListTile(
               onTap: () {
-                Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
+                Navigator.pushReplacementNamed(
+                  context,
+                  AboutPage.ROUTE_NAME,
+                );
               },
               leading: Icon(Icons.info_outline),
               title: Text('About'),

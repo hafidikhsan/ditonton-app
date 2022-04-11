@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:ditonton/data/models/database_model.dart';
 import 'package:ditonton/domain/entities/database.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../dummy_data/dummy_objects.dart';
-import '../../json_reader.dart';
 
 void main() {
   final tDatabaseModel = DatabaseModel(
