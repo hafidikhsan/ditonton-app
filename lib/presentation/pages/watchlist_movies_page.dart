@@ -1,3 +1,4 @@
+import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
@@ -48,13 +49,23 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                 child: CircularProgressIndicator(),
               );
             } else if (data.watchlistState == RequestState.Loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = data.watchlist[index];
-                  return WatchlistCard(movie);
-                },
-                itemCount: data.watchlist.length,
-              );
+              if (data.watchlist.isEmpty) {
+                return Center(
+                  child: Text(
+                    'Aduh, Kamu belum ada Watchlist',
+                    style: kHeading6,
+                  ),
+                );
+              } else {
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    final movie = data.watchlist[index];
+                    return WatchlistCard(movie);
+                  },
+                  itemCount: data.watchlist.length,
+                );
+              }
+              ;
             } else {
               return Center(
                 key: Key('error_message'),
