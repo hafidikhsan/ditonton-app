@@ -1,7 +1,9 @@
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/presentation/bloc/popular_series_bloc.dart';
 import 'package:ditonton/presentation/provider/popular_series_notifier.dart';
 import 'package:ditonton/presentation/widgets/series_card_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class PopularSeriesPage extends StatefulWidget {
@@ -15,9 +17,8 @@ class _PopularSeriesPageState extends State<PopularSeriesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<PopularSeriesNotifier>(context, listen: false)
-            .fetchPopularSeries());
+    Future.microtask(
+        () => context.read<PopularSeriesBloc>().add(LoadPopularSeries()));
   }
 
   @override
@@ -28,25 +29,27 @@ class _PopularSeriesPageState extends State<PopularSeriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<PopularSeriesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<PopularSeriesBloc, PopularSeriesState>(
+          builder: (context, data) {
+            if (data is PopularSeriesLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
+            } else if (data is PopularSeriesHasData) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.series[index];
+                  final movie = data.result[index];
                   return SeriesCard(movie);
                 },
-                itemCount: data.series.length,
+                itemCount: data.result.length,
               );
-            } else {
+            } else if (data is PopularSeriesError) {
               return Center(
                 key: Key('error_message'),
                 child: Text(data.message),
               );
+            } else {
+              return Container();
             }
           },
         ),

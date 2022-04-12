@@ -50,7 +50,6 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
                 child: Text(data.message),
               );
             } else {
-              print(data);
               return Container();
             }
           },

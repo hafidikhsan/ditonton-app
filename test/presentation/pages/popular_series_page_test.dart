@@ -1,61 +1,76 @@
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/series.dart';
+import 'package:ditonton/presentation/bloc/popular_series_bloc.dart';
 import 'package:ditonton/presentation/pages/popular_series_page.dart';
-import 'package:ditonton/presentation/provider/popular_series_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'popular_series_page_test.mocks.dart';
+class MockBloc extends Mock implements PopularSeriesBloc {}
 
-@GenerateMocks([PopularSeriesNotifier])
+class PopularSeriesEventFake extends Fake implements PopularSeriesEvent {}
+
+class PopularSeriesStateFake extends Fake implements PopularSeriesState {}
+
 void main() {
-  late MockPopularSeriesNotifier mockNotifier;
+  late PopularSeriesBloc popularSeriesBloc;
+
+  setUpAll(() {
+    registerFallbackValue(PopularSeriesEventFake());
+    registerFallbackValue(PopularSeriesStateFake());
+  });
 
   setUp(() {
-    mockNotifier = MockPopularSeriesNotifier();
+    popularSeriesBloc = MockBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<PopularSeriesNotifier>.value(
-      value: mockNotifier,
+    return BlocProvider<PopularSeriesBloc>.value(
+      value: popularSeriesBloc,
       child: MaterialApp(
         home: body,
       ),
     );
   }
 
-  testWidgets('Page should display center progress bar when loading',
+  testWidgets('Page should display progress bar when loading',
       (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Loading);
+    when(() => popularSeriesBloc.stream)
+        .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
+    when(() => popularSeriesBloc.state).thenReturn(PopularSeriesLoading());
 
-    final progressBarFinder = find.byType(CircularProgressIndicator);
+    await tester.pumpWidget(_makeTestableWidget(PopularSeriesPage()));
+
+    final progressFinder = find.byType(CircularProgressIndicator);
     final centerFinder = find.byType(Center);
 
-    await tester.pumpWidget(_makeTestableWidget(PopularSeriesPage()));
-
+    expect(progressFinder, findsOneWidget);
     expect(centerFinder, findsOneWidget);
-    expect(progressBarFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display ListView when data is loaded',
+  testWidgets('Page should display when data is loaded',
       (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Loaded);
-    when(mockNotifier.series).thenReturn(<Series>[]);
-
-    final listViewFinder = find.byType(ListView);
+    when(() => popularSeriesBloc.stream)
+        .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
+    when(() => popularSeriesBloc.state).thenReturn(PopularSeriesLoading());
+    when(() => popularSeriesBloc.stream)
+        .thenAnswer((_) => Stream.value(PopularSeriesHasData(<Series>[])));
+    when(() => popularSeriesBloc.state)
+        .thenReturn(PopularSeriesHasData(<Series>[]));
 
     await tester.pumpWidget(_makeTestableWidget(PopularSeriesPage()));
 
-    expect(listViewFinder, findsOneWidget);
+    final progressFinder = find.byType(ListView);
+
+    expect(progressFinder, findsOneWidget);
   });
 
   testWidgets('Page should display text with message when Error',
       (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Error);
-    when(mockNotifier.message).thenReturn('Error message');
+    when(() => popularSeriesBloc.stream)
+        .thenAnswer((_) => Stream.value(PopularSeriesError("Error Massage")));
+    when(() => popularSeriesBloc.state)
+        .thenReturn(PopularSeriesError("Error Massage"));
 
     final textFinder = find.byKey(Key('error_message'));
 

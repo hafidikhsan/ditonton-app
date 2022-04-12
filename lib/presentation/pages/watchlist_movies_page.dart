@@ -1,9 +1,11 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/common/utils.dart';
+import 'package:ditonton/presentation/bloc/watchlist_bloc.dart';
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/widgets/watchlist_card_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
@@ -18,9 +20,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<WatchlistMovieNotifier>(context, listen: false)
-            .fetchWatchlistMovies());
+    Future.microtask(() => context.read<WatchlistBloc>().add(LoadWatchlist()));
   }
 
   @override
@@ -30,8 +30,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   }
 
   void didPopNext() {
-    Provider.of<WatchlistMovieNotifier>(context, listen: false)
-        .fetchWatchlistMovies();
+    context.read<WatchlistBloc>().add(LoadWatchlist());
   }
 
   @override
@@ -42,14 +41,14 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<WatchlistMovieNotifier>(
-          builder: (context, data, child) {
-            if (data.watchlistState == RequestState.Loading) {
+        child: BlocBuilder<WatchlistBloc, WatchlistState>(
+          builder: (context, data) {
+            if (data is WatchlistLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.watchlistState == RequestState.Loaded) {
-              if (data.watchlist.isEmpty) {
+            } else if (data is WatchlistHasData) {
+              if (data.result.isEmpty) {
                 return Center(
                   child: Text(
                     'Ops, You dont have Watchlist yet',
@@ -59,18 +58,19 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
               } else {
                 return ListView.builder(
                   itemBuilder: (context, index) {
-                    final movie = data.watchlist[index];
+                    final movie = data.result[index];
                     return WatchlistCard(movie);
                   },
-                  itemCount: data.watchlist.length,
+                  itemCount: data.result.length,
                 );
               }
-              ;
-            } else {
+            } else if (data is WatchlistError) {
               return Center(
                 key: Key('error_message'),
                 child: Text(data.message),
               );
+            } else {
+              return Container();
             }
           },
         ),
