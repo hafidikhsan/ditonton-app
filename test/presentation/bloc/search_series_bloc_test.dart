@@ -42,6 +42,32 @@ void main() {
   });
 
   blocTest<SearchSeriesBloc, SearchSeriesState>(
+    'should get data from the usecase',
+    build: () {
+      when(mockSearchSeries.execute(tQuery))
+          .thenAnswer((_) async => Right(tSeriesList));
+      return searchBloc;
+    },
+    act: (bloc) => bloc.add(OnSeriesQueryChanged(tQuery)),
+    verify: (bloc) {
+      verify(mockSearchSeries.execute(tQuery));
+    },
+  );
+
+  blocTest<SearchSeriesBloc, SearchSeriesState>(
+    'should change state to loading when usecase is called',
+    build: () {
+      when(mockSearchSeries.execute(tQuery))
+          .thenAnswer((_) async => Right(tSeriesList));
+      return searchBloc;
+    },
+    act: (bloc) => bloc.emit(SearchSeriesLoading()),
+    expect: () => [
+      SearchSeriesLoading(),
+    ],
+  );
+
+  blocTest<SearchSeriesBloc, SearchSeriesState>(
     'Should emit [Loading, HasData] when data is gotten successfully',
     build: () {
       when(mockSearchSeries.execute(tQuery))
