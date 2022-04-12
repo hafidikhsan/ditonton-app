@@ -52,7 +52,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
               if (data.watchlist.isEmpty) {
                 return Center(
                   child: Text(
-                    'Aduh, Kamu belum ada Watchlist',
+                    'Ops, You dont have Watchlist yet',
                     style: kHeading6,
                   ),
                 );

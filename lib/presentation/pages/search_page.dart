@@ -1,10 +1,13 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/presentation/bloc/search_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/search_series_bloc.dart';
 import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
 import 'package:ditonton/presentation/provider/series_search_notifier.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:ditonton/presentation/widgets/series_card_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class SearchPage extends StatelessWidget {
@@ -25,12 +28,12 @@ class SearchPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onSubmitted: (query) {
+              onChanged: (query) {
                 (isMovie)
-                    ? Provider.of<MovieSearchNotifier>(context, listen: false)
-                        .fetchMovieSearch(query)
-                    : Provider.of<SeriesSearchNotifier>(context, listen: false)
-                        .fetchSeriesSearch(query);
+                    ? context.read<SearchMovieBloc>().add(OnQueryChanged(query))
+                    : context
+                        .read<SearchSeriesBloc>()
+                        .add(OnSeriesQueryChanged(query));
               },
               decoration: InputDecoration(
                 hintText: 'Search title',
@@ -45,29 +48,29 @@ class SearchPage extends StatelessWidget {
               style: kHeading6,
             ),
             (isMovie)
-                ? Consumer<MovieSearchNotifier>(
-                    builder: (context, data, child) {
-                      if (data.state == RequestState.Loading) {
+                ? BlocBuilder<SearchMovieBloc, SearchMovieState>(
+                    builder: (context, state) {
+                      if (state is SearchLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (data.state == RequestState.Loaded) {
-                        final result = data.searchResult;
+                      } else if (state is SearchHasData) {
+                        final result = state.result;
                         return Expanded(
                           child: ListView.builder(
                             padding: const EdgeInsets.all(8),
                             itemBuilder: (context, index) {
-                              final movie = data.searchResult[index];
+                              final movie = result[index];
                               return MovieCard(movie);
                             },
                             itemCount: result.length,
                           ),
                         );
-                      } else if (data.state == RequestState.Error) {
+                      } else if (state is SearchError) {
                         return Expanded(
                           child: Center(
                             child: Text(
-                              'Sorry, Your Movie is not Available',
+                              state.message,
                               style: kHeading6,
                             ),
                           ),
@@ -79,29 +82,29 @@ class SearchPage extends StatelessWidget {
                       }
                     },
                   )
-                : Consumer<SeriesSearchNotifier>(
-                    builder: (context, data, child) {
-                      if (data.state == RequestState.Loading) {
+                : BlocBuilder<SearchSeriesBloc, SearchSeriesState>(
+                    builder: (context, data) {
+                      if (data is SearchSeriesLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (data.state == RequestState.Loaded) {
-                        final result = data.searchResult;
+                      } else if (data is SearchSeriesHasData) {
+                        final result = data.result;
                         return Expanded(
                           child: ListView.builder(
                             padding: const EdgeInsets.all(8),
                             itemBuilder: (context, index) {
-                              final series = data.searchResult[index];
+                              final series = result[index];
                               return SeriesCard(series);
                             },
                             itemCount: result.length,
                           ),
                         );
-                      } else if (data.state == RequestState.Error) {
+                      } else if (data is SearchSeriesError) {
                         return Expanded(
                           child: Center(
                             child: Text(
-                              'Sorry, Your TV Series is not Available',
+                              data.message,
                               style: kHeading6,
                             ),
                           ),
