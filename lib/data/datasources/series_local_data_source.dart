@@ -6,7 +6,6 @@ abstract class SeriesLocalDataSource {
   Future<String> insertWatchlist(DatabaseModel movie);
   Future<String> removeWatchlist(DatabaseModel movie);
   Future<DatabaseModel?> getSeriesById(int id);
-  Future<List<DatabaseModel>> getWatchlist();
 }
 
 class SeriesLocalDataSourceImpl implements SeriesLocalDataSource {
@@ -43,12 +42,5 @@ class SeriesLocalDataSourceImpl implements SeriesLocalDataSource {
     } else {
       return null;
     }
-  }
-
-  @override
-  Future<List<DatabaseModel>> getWatchlist() async {
-    final result = await databaseHelper.getWatchlist();
-
-    return result.map((data) => DatabaseModel.fromMap(data)).toList();
   }
 }

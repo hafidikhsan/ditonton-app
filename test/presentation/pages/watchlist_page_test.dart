@@ -1,6 +1,7 @@
 import 'package:ditonton/domain/entities/database.dart';
 import 'package:ditonton/presentation/bloc/watchlist_bloc.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
+import 'package:ditonton/presentation/widgets/watchlist_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -81,6 +82,23 @@ void main() {
     final progressFinder = find.byType(ListView);
 
     expect(progressFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display when data is loaded with data',
+      (WidgetTester tester) async {
+    when(() => watchlistBloc.stream)
+        .thenAnswer((_) => Stream.value(WatchlistLoading()));
+    when(() => watchlistBloc.state).thenReturn(WatchlistLoading());
+    when(() => watchlistBloc.stream).thenAnswer(
+        (_) => Stream.value(WatchlistHasData(<Database>[testWatchlistMovie])));
+    when(() => watchlistBloc.state)
+        .thenReturn(WatchlistHasData(<Database>[testWatchlistMovie]));
+
+    await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+
+    final cardFinder = find.byType(WatchlistCard);
+
+    expect(cardFinder, findsOneWidget);
   });
 
   testWidgets('Page should display text with message when Error',

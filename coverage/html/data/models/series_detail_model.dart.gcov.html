@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-13 09:32:16</td>
+            <td class="headerValue">2022-04-13 11:45:19</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -66,7 +66,7 @@
 <a name="4"><span class="lineNum">       4 </span>            : import 'package:equatable/equatable.dart';</a>
 <a name="5"><span class="lineNum">       5 </span>            : </a>
 <a name="6"><span class="lineNum">       6 </span>            : class SeriesDetailResponse extends Equatable {</a>
-<a name="7"><span class="lineNum">       7 </span><span class="lineCov">          2 :   SeriesDetailResponse({</span></a>
+<a name="7"><span class="lineNum">       7 </span><span class="lineCov">          3 :   SeriesDetailResponse({</span></a>
 <a name="8"><span class="lineNum">       8 </span>            :     required this.adult,</a>
 <a name="9"><span class="lineNum">       9 </span>            :     required this.backdropPath,</a>
 <a name="10"><span class="lineNum">      10 </span>            :     required this.firstAir,</a>
@@ -131,21 +131,21 @@
 <a name="69"><span class="lineNum">      69 </span><span class="lineCov">          3 :         &quot;seasons&quot;: List&lt;dynamic&gt;.from(seasons.map((x) =&gt; x.toJson())),</span></a>
 <a name="70"><span class="lineNum">      70 </span>            :       };</a>
 <a name="71"><span class="lineNum">      71 </span>            : </a>
-<a name="72"><span class="lineNum">      72 </span><span class="lineCov">          1 :   SeriesDetail toEntity() {</span></a>
-<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          1 :     return SeriesDetail(</span></a>
-<a name="74"><span class="lineNum">      74 </span><span class="lineCov">          1 :       adult: this.adult,</span></a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          1 :       backdropPath: this.backdropPath,</span></a>
-<a name="76"><span class="lineNum">      76 </span><span class="lineCov">          1 :       firstAir: this.firstAir,</span></a>
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">          3 :       genres: this.genres.map((genre) =&gt; genre.toEntity()).toList(),</span></a>
-<a name="78"><span class="lineNum">      78 </span><span class="lineCov">          1 :       id: this.id,</span></a>
-<a name="79"><span class="lineNum">      79 </span><span class="lineCov">          1 :       name: this.name,</span></a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineCov">          1 :       originalName: this.originalName,</span></a>
-<a name="81"><span class="lineNum">      81 </span><span class="lineCov">          1 :       overview: this.overview,</span></a>
-<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          1 :       popularity: this.popularity,</span></a>
-<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          1 :       posterPath: this.posterPath,</span></a>
-<a name="84"><span class="lineNum">      84 </span><span class="lineCov">          1 :       voteAverage: this.voteAverage,</span></a>
-<a name="85"><span class="lineNum">      85 </span><span class="lineCov">          1 :       voteCount: this.voteCount,</span></a>
-<a name="86"><span class="lineNum">      86 </span><span class="lineCov">          3 :       seasons: this.seasons.map((e) =&gt; e.seasonNumber).toList(),</span></a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineCov">          2 :   SeriesDetail toEntity() {</span></a>
+<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          2 :     return SeriesDetail(</span></a>
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">          2 :       adult: this.adult,</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          2 :       backdropPath: this.backdropPath,</span></a>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">          2 :       firstAir: this.firstAir,</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">          8 :       genres: this.genres.map((genre) =&gt; genre.toEntity()).toList(),</span></a>
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">          2 :       id: this.id,</span></a>
+<a name="79"><span class="lineNum">      79 </span><span class="lineCov">          2 :       name: this.name,</span></a>
+<a name="80"><span class="lineNum">      80 </span><span class="lineCov">          2 :       originalName: this.originalName,</span></a>
+<a name="81"><span class="lineNum">      81 </span><span class="lineCov">          2 :       overview: this.overview,</span></a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          2 :       popularity: this.popularity,</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          2 :       posterPath: this.posterPath,</span></a>
+<a name="84"><span class="lineNum">      84 </span><span class="lineCov">          2 :       voteAverage: this.voteAverage,</span></a>
+<a name="85"><span class="lineNum">      85 </span><span class="lineCov">          2 :       voteCount: this.voteCount,</span></a>
+<a name="86"><span class="lineNum">      86 </span><span class="lineCov">          6 :       seasons: this.seasons.map((e) =&gt; e.seasonNumber).toList(),</span></a>
 <a name="87"><span class="lineNum">      87 </span>            :     );</a>
 <a name="88"><span class="lineNum">      88 </span>            :   }</a>
 <a name="89"><span class="lineNum">      89 </span>            : </a>

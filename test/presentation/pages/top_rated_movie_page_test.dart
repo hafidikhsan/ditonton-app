@@ -1,6 +1,7 @@
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
+import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,6 +34,23 @@ void main() {
     );
   }
 
+  final tMovieModel = Movie(
+    adult: false,
+    backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
+    genreIds: [14, 28],
+    id: 557,
+    originalTitle: 'Spider-Man',
+    overview:
+        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
+    popularity: 60.441,
+    posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
+    releaseDate: '2002-05-01',
+    title: 'Spider-Man',
+    video: false,
+    voteAverage: 7.2,
+    voteCount: 13507,
+  );
+
   testWidgets('Page should display progress bar when loading',
       (WidgetTester tester) async {
     when(() => topRatedMovieBloc.stream)
@@ -61,6 +79,23 @@ void main() {
     await tester.pumpWidget(_makeTestableWidget(TopRatedMoviesPage()));
 
     final progressFinder = find.byType(ListView);
+
+    expect(progressFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display when data is loaded with data',
+      (WidgetTester tester) async {
+    when(() => topRatedMovieBloc.stream)
+        .thenAnswer((_) => Stream.value(TopRatedMovieLoading()));
+    when(() => topRatedMovieBloc.state).thenReturn(TopRatedMovieLoading());
+    when(() => topRatedMovieBloc.stream).thenAnswer(
+        (_) => Stream.value(TopRatedMovieHasData(<Movie>[tMovieModel])));
+    when(() => topRatedMovieBloc.state)
+        .thenReturn(TopRatedMovieHasData(<Movie>[tMovieModel]));
+
+    await tester.pumpWidget(_makeTestableWidget(TopRatedMoviesPage()));
+
+    final progressFinder = find.byType(MovieCard);
 
     expect(progressFinder, findsOneWidget);
   });

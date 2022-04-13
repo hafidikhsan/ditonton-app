@@ -1,5 +1,6 @@
 import 'package:ditonton/data/models/database_model.dart';
 import 'package:ditonton/domain/entities/database.dart';
+import 'package:ditonton/domain/entities/episodes.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
 import 'package:ditonton/domain/entities/series_detail.dart';
@@ -84,6 +85,18 @@ final testSeriesTable = DatabaseModel(
   posterPath: 'posterPath',
   overview: 'overview',
   isMovie: 0,
+);
+
+final testEpisode = Episodes(
+  airDate: 'airDate',
+  episodeNumber: 1,
+  id: 1,
+  name: 'name',
+  overview: 'overview',
+  seasonNumber: 1,
+  stillPath: 'stillPath',
+  voteAverage: 1,
+  voteCount: 1,
 );
 
 final testMovieMap = {

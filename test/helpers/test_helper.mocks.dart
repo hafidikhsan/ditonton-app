@@ -389,12 +389,6 @@ class MockSeriesLocalDataSource extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#getSeriesById, [id]),
               returnValue: Future<_i15.DatabaseModel?>.value())
           as _i7.Future<_i15.DatabaseModel?>);
-  @override
-  _i7.Future<List<_i15.DatabaseModel>> getWatchlist() => (super.noSuchMethod(
-          Invocation.method(#getWatchlist, []),
-          returnValue:
-              Future<List<_i15.DatabaseModel>>.value(<_i15.DatabaseModel>[]))
-      as _i7.Future<List<_i15.DatabaseModel>>);
 }
 
 /// A class which mocks [Client].

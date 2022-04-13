@@ -85,16 +85,4 @@ void main() {
       expect(result, null);
     });
   });
-
-  group('get watchlist Series', () {
-    test('should return list of SeriesTable from database', () async {
-      // arrange
-      when(mockDatabaseHelper.getWatchlist())
-          .thenAnswer((_) async => [testSeriesMap]);
-      // act
-      final result = await dataSource.getWatchlist();
-      // assert
-      expect(result, [testSeriesTable]);
-    });
-  });
 }
