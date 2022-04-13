@@ -28,10 +28,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      context.read<NowPlayingMovieBloc>().add(LoadNowPlayingMovie());
       context.read<PopularMovieBloc>().add(LoadPopularMovie());
       context.read<TopRatedMovieBloc>().add(LoadTopRatedMovie());
-      context.read<NowPlayingSeriesBloc>().add(LoadNowPlayingSeries());
       context.read<PopularSeriesBloc>().add(LoadPopularSeries());
       context.read<TopRatedSeriesBlocBloc>().add(LoadTopRatedSeries());
     });
