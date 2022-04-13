@@ -3,6 +3,8 @@ import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/presentation/bloc/search_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/search_series_bloc.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
+import 'package:ditonton/presentation/widgets/movie_card_list.dart';
+import 'package:ditonton/presentation/widgets/series_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -45,6 +47,23 @@ void main() {
     );
   }
 
+  final tMovieModel = Movie(
+    adult: false,
+    backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
+    genreIds: [14, 28],
+    id: 557,
+    originalTitle: 'Spider-Man',
+    overview:
+        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
+    popularity: 60.441,
+    posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
+    releaseDate: '2002-05-01',
+    title: 'Spider-Man',
+    video: false,
+    voteAverage: 7.2,
+    voteCount: 13507,
+  );
+
   Widget _makeTestableWidgetSeries(Widget body) {
     return BlocProvider<SearchSeriesBloc>.value(
       value: searchSeriesBloc,
@@ -53,6 +72,20 @@ void main() {
       ),
     );
   }
+
+  final tSeries = Series(
+    backdropPath: 'backdropPath',
+    firstAir: 'firstAir',
+    genreIds: [1, 2, 3],
+    id: 1,
+    name: 'Moon Knight',
+    originalName: 'originalName',
+    overview: 'overview',
+    popularity: 1,
+    posterPath: 'posterPath',
+    voteAverage: 1,
+    voteCount: 1,
+  );
 
   group('Movies', () {
     testWidgets('Page should display progress bar when loading',
@@ -92,6 +125,29 @@ void main() {
       );
 
       final progressFinder = find.byType(ListView);
+
+      expect(progressFinder, findsOneWidget);
+    });
+
+    testWidgets('Page should display when data is loaded with data',
+        (WidgetTester tester) async {
+      when(() => searchMovieBloc.stream)
+          .thenAnswer((_) => Stream.value(SearchLoading()));
+      when(() => searchMovieBloc.state).thenReturn(SearchLoading());
+      when(() => searchMovieBloc.stream)
+          .thenAnswer((_) => Stream.value(SearchHasData(<Movie>[tMovieModel])));
+      when(() => searchMovieBloc.state)
+          .thenReturn(SearchHasData(<Movie>[tMovieModel]));
+
+      await tester.pumpWidget(
+        _makeTestableWidgetMovie(
+          SearchPage(
+            isMovie: true,
+          ),
+        ),
+      );
+
+      final progressFinder = find.byType(MovieCard);
 
       expect(progressFinder, findsOneWidget);
     });
@@ -156,6 +212,29 @@ void main() {
       );
 
       final progressFinder = find.byType(ListView);
+
+      expect(progressFinder, findsOneWidget);
+    });
+
+    testWidgets('Page should display when data is loaded with data',
+        (WidgetTester tester) async {
+      when(() => searchSeriesBloc.stream)
+          .thenAnswer((_) => Stream.value(SearchSeriesLoading()));
+      when(() => searchSeriesBloc.state).thenReturn(SearchSeriesLoading());
+      when(() => searchSeriesBloc.stream).thenAnswer(
+          (_) => Stream.value(SearchSeriesHasData(<Series>[tSeries])));
+      when(() => searchSeriesBloc.state)
+          .thenReturn(SearchSeriesHasData(<Series>[tSeries]));
+
+      await tester.pumpWidget(
+        _makeTestableWidgetSeries(
+          SearchPage(
+            isMovie: false,
+          ),
+        ),
+      );
+
+      final progressFinder = find.byType(SeriesCard);
 
       expect(progressFinder, findsOneWidget);
     });

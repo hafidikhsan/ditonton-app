@@ -1,6 +1,7 @@
 import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/presentation/bloc/popular_series_bloc.dart';
 import 'package:ditonton/presentation/pages/popular_series_page.dart';
+import 'package:ditonton/presentation/widgets/series_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,6 +34,20 @@ void main() {
     );
   }
 
+  final tSeries = Series(
+    backdropPath: 'backdropPath',
+    firstAir: 'firstAir',
+    genreIds: [1, 2, 3],
+    id: 1,
+    name: 'Moon Knight',
+    originalName: 'originalName',
+    overview: 'overview',
+    popularity: 1,
+    posterPath: 'posterPath',
+    voteAverage: 1,
+    voteCount: 1,
+  );
+
   testWidgets('Page should display progress bar when loading',
       (WidgetTester tester) async {
     when(() => popularSeriesBloc.stream)
@@ -61,6 +76,23 @@ void main() {
     await tester.pumpWidget(_makeTestableWidget(PopularSeriesPage()));
 
     final progressFinder = find.byType(ListView);
+
+    expect(progressFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display when data is loaded with data',
+      (WidgetTester tester) async {
+    when(() => popularSeriesBloc.stream)
+        .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
+    when(() => popularSeriesBloc.state).thenReturn(PopularSeriesLoading());
+    when(() => popularSeriesBloc.stream).thenAnswer(
+        (_) => Stream.value(PopularSeriesHasData(<Series>[tSeries])));
+    when(() => popularSeriesBloc.state)
+        .thenReturn(PopularSeriesHasData(<Series>[tSeries]));
+
+    await tester.pumpWidget(_makeTestableWidget(PopularSeriesPage()));
+
+    final progressFinder = find.byType(SeriesCard);
 
     expect(progressFinder, findsOneWidget);
   });

@@ -1,15 +1,17 @@
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/presentation/bloc/now_playing_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/popular_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_series_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/presentation/widgets/movie_poster_list.dart';
 import 'package:ditonton/presentation/widgets/sub_heading.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeMoviePage extends StatefulWidget {
   static const ROUTE_NAME = '/home-movie';
@@ -22,11 +24,11 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+    Future.microtask(() {
+      context.read<NowPlayingMovieBloc>().add(LoadNowPlayingMovie());
+      context.read<PopularMovieBloc>().add(LoadPopularMovie());
+      context.read<TopRatedMovieBloc>().add(LoadTopRatedMovie());
+    });
   }
 
   @override
@@ -117,13 +119,22 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 'Now Playing',
                 style: kHeading6,
               ),
-              Consumer<MovieListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.nowPlayingState;
-                  return PosterListMovie(
-                    data: data.nowPlayingMovies,
-                    state: state,
-                  );
+              BlocBuilder<NowPlayingMovieBloc, NowPlayingMovieState>(
+                builder: (context, data) {
+                  if (data is NowPlayingMovieLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (data is NowPlayingMovieHasData) {
+                    return MovieList(data.result);
+                  } else if (data is NowPlayingMovieError) {
+                    return Center(
+                      key: Key('error_message'),
+                      child: Text(data.message),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
               SubHeading(
@@ -133,13 +144,22 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   PopularMoviesPage.ROUTE_NAME,
                 ),
               ),
-              Consumer<MovieListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.popularMoviesState;
-                  return PosterListMovie(
-                    data: data.popularMovies,
-                    state: state,
-                  );
+              BlocBuilder<PopularMovieBloc, PopularMovieState>(
+                builder: (context, data) {
+                  if (data is PopularMovieLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (data is PopularMovieHasData) {
+                    return MovieList(data.result);
+                  } else if (data is PopularMovieError) {
+                    return Center(
+                      key: Key('error_message'),
+                      child: Text(data.message),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
               SubHeading(
@@ -149,13 +169,22 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   TopRatedMoviesPage.ROUTE_NAME,
                 ),
               ),
-              Consumer<MovieListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.topRatedMoviesState;
-                  return PosterListMovie(
-                    data: data.topRatedMovies,
-                    state: state,
-                  );
+              BlocBuilder<TopRatedMovieBloc, TopRatedMovieState>(
+                builder: (context, data) {
+                  if (data is TopRatedMovieLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (data is TopRatedMovieHasData) {
+                    return MovieList(data.result);
+                  } else if (data is TopRatedMovieError) {
+                    return Center(
+                      key: Key('error_message'),
+                      child: Text(data.message),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
             ],

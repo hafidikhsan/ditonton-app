@@ -1,3 +1,9 @@
+import 'package:ditonton/presentation/bloc/now_playing_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/now_playing_series_bloc.dart';
+import 'package:ditonton/presentation/bloc/popular_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/popular_series_bloc.dart';
+import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/top_rated_series_bloc_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/home_series_page.dart';
@@ -6,13 +12,11 @@ import 'package:ditonton/presentation/pages/popular_series_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_series_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/series_list_notifier.dart';
 import 'package:ditonton/presentation/widgets/movie_poster_list.dart';
 import 'package:ditonton/presentation/widgets/series_poster_list.dart';
 import 'package:ditonton/presentation/widgets/sub_heading.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,12 +28,12 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<MovieListNotifier>(context, listen: false)
-        ..fetchPopularMovies()
-        ..fetchTopRatedMovies();
-      Provider.of<SeriesListNotifier>(context, listen: false)
-        ..fetchPopularSeries()
-        ..fetchTopRatedSeries();
+      context.read<NowPlayingMovieBloc>().add(LoadNowPlayingMovie());
+      context.read<PopularMovieBloc>().add(LoadPopularMovie());
+      context.read<TopRatedMovieBloc>().add(LoadTopRatedMovie());
+      context.read<NowPlayingSeriesBloc>().add(LoadNowPlayingSeries());
+      context.read<PopularSeriesBloc>().add(LoadPopularSeries());
+      context.read<TopRatedSeriesBlocBloc>().add(LoadTopRatedSeries());
     });
   }
 
@@ -112,13 +116,22 @@ class _HomePageState extends State<HomePage> {
                   PopularMoviesPage.ROUTE_NAME,
                 ),
               ),
-              Consumer<MovieListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.popularMoviesState;
-                  return PosterListMovie(
-                    data: data.popularMovies,
-                    state: state,
-                  );
+              BlocBuilder<PopularMovieBloc, PopularMovieState>(
+                builder: (context, data) {
+                  if (data is PopularMovieLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (data is PopularMovieHasData) {
+                    return MovieList(data.result);
+                  } else if (data is PopularMovieError) {
+                    return Center(
+                      key: Key('error_message'),
+                      child: Text(data.message),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
               SubHeading(
@@ -128,13 +141,22 @@ class _HomePageState extends State<HomePage> {
                   TopRatedMoviesPage.ROUTE_NAME,
                 ),
               ),
-              Consumer<MovieListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.topRatedMoviesState;
-                  return PosterListMovie(
-                    data: data.topRatedMovies,
-                    state: state,
-                  );
+              BlocBuilder<TopRatedMovieBloc, TopRatedMovieState>(
+                builder: (context, data) {
+                  if (data is TopRatedMovieLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (data is TopRatedMovieHasData) {
+                    return MovieList(data.result);
+                  } else if (data is TopRatedMovieError) {
+                    return Center(
+                      key: Key('error_message'),
+                      child: Text(data.message),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
               SubHeading(
@@ -144,13 +166,22 @@ class _HomePageState extends State<HomePage> {
                   PopularSeriesPage.ROUTE_NAME,
                 ),
               ),
-              Consumer<SeriesListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.popularSeriesState;
-                  return PosterListSeries(
-                    data: data.popularSeries,
-                    state: state,
-                  );
+              BlocBuilder<PopularSeriesBloc, PopularSeriesState>(
+                builder: (context, data) {
+                  if (data is PopularSeriesLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (data is PopularSeriesHasData) {
+                    return SeriesList(data.result);
+                  } else if (data is PopularSeriesError) {
+                    return Center(
+                      key: Key('error_message'),
+                      child: Text(data.message),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
               SubHeading(
@@ -160,13 +191,22 @@ class _HomePageState extends State<HomePage> {
                   TopRatedSeriesPage.ROUTE_NAME,
                 ),
               ),
-              Consumer<SeriesListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.topRatedSeriesState;
-                  return PosterListSeries(
-                    data: data.topRatedSeries,
-                    state: state,
-                  );
+              BlocBuilder<TopRatedSeriesBlocBloc, TopRatedSeriesBlocState>(
+                builder: (context, data) {
+                  if (data is TopRatedSeriesLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (data is TopRatedSeriesHasData) {
+                    return SeriesList(data.result);
+                  } else if (data is TopRatedSeriesError) {
+                    return Center(
+                      key: Key('error_message'),
+                      child: Text(data.message),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
             ],

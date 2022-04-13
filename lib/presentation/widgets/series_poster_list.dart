@@ -1,33 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/presentation/pages/series_detail_page.dart';
 import 'package:flutter/material.dart';
-
-class PosterListSeries extends StatelessWidget {
-  final List<Series> data;
-  final RequestState state;
-
-  PosterListSeries({
-    Key? key,
-    required this.data,
-    required this.state,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    if (state == RequestState.Loading) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (state == RequestState.Loaded) {
-      return SeriesList(data);
-    } else {
-      return Text('Failed');
-    }
-  }
-}
 
 class SeriesList extends StatelessWidget {
   final List<Series> series;
