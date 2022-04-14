@@ -12,18 +12,21 @@ class NowPlayingMovieBloc
 
   NowPlayingMovieBloc(this._getNowPlayingMovies)
       : super(NowPlayingMovieEmpty()) {
-    on<LoadNowPlayingMovie>((event, emit) async {
-      emit(NowPlayingMovieLoading());
-      final result = await _getNowPlayingMovies.execute();
+    on<LoadNowPlayingMovie>(
+      (event, emit) async {
+        emit(NowPlayingMovieLoading());
 
-      result.fold(
-        (failure) {
-          emit(NowPlayingMovieError(failure.message));
-        },
-        (data) {
-          emit(NowPlayingMovieHasData(data));
-        },
-      );
-    });
+        final result = await _getNowPlayingMovies.execute();
+
+        result.fold(
+          (failure) {
+            emit(NowPlayingMovieError(failure.message));
+          },
+          (data) {
+            emit(NowPlayingMovieHasData(data));
+          },
+        );
+      },
+    );
   }
 }

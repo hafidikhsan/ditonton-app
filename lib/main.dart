@@ -1,11 +1,13 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
+import 'package:ditonton/presentation/bloc/movie_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/now_playing_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/now_playing_series_bloc.dart';
 import 'package:ditonton/presentation/bloc/popular_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/popular_series_bloc.dart';
 import 'package:ditonton/presentation/bloc/search_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/search_series_bloc.dart';
+import 'package:ditonton/presentation/bloc/series_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_series_bloc_bloc.dart';
 import 'package:ditonton/presentation/bloc/watchlist_bloc.dart';
@@ -22,12 +24,7 @@ import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_series_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/popular_series_notifier.dart';
 import 'package:ditonton/presentation/provider/series_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/series_list_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,11 +41,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<MovieDetailBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<SeriesDetailNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<SeriesDetailBloc>(),
         ),
         BlocProvider(
           create: (_) => di.locator<SearchMovieBloc>(),
