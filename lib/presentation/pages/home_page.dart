@@ -1,5 +1,3 @@
-import 'package:ditonton/presentation/bloc/now_playing_movie_bloc.dart';
-import 'package:ditonton/presentation/bloc/now_playing_series_bloc.dart';
 import 'package:ditonton/presentation/bloc/popular_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/popular_series_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';

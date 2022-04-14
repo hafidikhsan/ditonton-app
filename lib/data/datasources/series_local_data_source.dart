@@ -3,8 +3,8 @@ import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/models/database_model.dart';
 
 abstract class SeriesLocalDataSource {
-  Future<String> insertWatchlist(DatabaseModel movie);
-  Future<String> removeWatchlist(DatabaseModel movie);
+  Future<String> insertWatchlist(DatabaseModel series);
+  Future<String> removeWatchlist(DatabaseModel series);
   Future<DatabaseModel?> getSeriesById(int id);
 }
 

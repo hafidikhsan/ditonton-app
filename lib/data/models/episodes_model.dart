@@ -50,15 +50,16 @@ class Episode extends Equatable {
 
   Episodes toEntity() {
     return Episodes(
-        airDate: this.airDate,
-        episodeNumber: this.episodeNumber,
-        id: this.id,
-        name: this.name,
-        overview: this.overview,
-        seasonNumber: this.seasonNumber,
-        stillPath: this.stillPath,
-        voteAverage: this.voteAverage,
-        voteCount: this.voteCount);
+      airDate: this.airDate,
+      episodeNumber: this.episodeNumber,
+      id: this.id,
+      name: this.name,
+      overview: this.overview,
+      seasonNumber: this.seasonNumber,
+      stillPath: this.stillPath,
+      voteAverage: this.voteAverage,
+      voteCount: this.voteCount,
+    );
   }
 
   @override

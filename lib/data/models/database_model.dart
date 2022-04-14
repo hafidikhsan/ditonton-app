@@ -26,11 +26,11 @@ class DatabaseModel extends Equatable {
         isMovie: 1,
       );
 
-  factory DatabaseModel.fromSeriesEntity(SeriesDetail movie) => DatabaseModel(
-        id: movie.id,
-        title: movie.name,
-        posterPath: movie.posterPath,
-        overview: movie.overview,
+  factory DatabaseModel.fromSeriesEntity(SeriesDetail series) => DatabaseModel(
+        id: series.id,
+        title: series.name,
+        posterPath: series.posterPath,
+        overview: series.overview,
         isMovie: 0,
       );
 

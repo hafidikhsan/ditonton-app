@@ -15,7 +15,7 @@ abstract class SeriesRepository {
     int seasons,
   );
   Future<Either<Failure, List<Series>>> searchSeries(String query);
-  Future<Either<Failure, String>> saveWatchlist(SeriesDetail movie);
-  Future<Either<Failure, String>> removeWatchlist(SeriesDetail movie);
+  Future<Either<Failure, String>> saveWatchlist(SeriesDetail series);
+  Future<Either<Failure, String>> removeWatchlist(SeriesDetail series);
   Future<bool> isAddedToWatchlist(int id);
 }

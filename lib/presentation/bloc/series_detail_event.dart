@@ -23,7 +23,7 @@ class OnSeasonValue extends SeriesDetailEvent {
   OnSeasonValue(this.season, this.id);
 
   @override
-  List<Object> get props => [season];
+  List<Object> get props => [season, id];
 }
 
 class OnSeriesEpisode extends SeriesDetailEvent {
