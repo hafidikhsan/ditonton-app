@@ -297,15 +297,15 @@ class MockSeriesRepository extends _i1.Mock implements _i18.SeriesRepository {
           .Future<_i2.Either<_i8.Failure, List<_i19.Series>>>);
   @override
   _i7.Future<_i2.Either<_i8.Failure, String>> saveWatchlist(
-          _i20.SeriesDetail? movie) =>
-      (super.noSuchMethod(Invocation.method(#saveWatchlist, [movie]),
+          _i20.SeriesDetail? series) =>
+      (super.noSuchMethod(Invocation.method(#saveWatchlist, [series]),
               returnValue: Future<_i2.Either<_i8.Failure, String>>.value(
                   _FakeEither_0<_i8.Failure, String>()))
           as _i7.Future<_i2.Either<_i8.Failure, String>>);
   @override
   _i7.Future<_i2.Either<_i8.Failure, String>> removeWatchlist(
-          _i20.SeriesDetail? movie) =>
-      (super.noSuchMethod(Invocation.method(#removeWatchlist, [movie]),
+          _i20.SeriesDetail? series) =>
+      (super.noSuchMethod(Invocation.method(#removeWatchlist, [series]),
               returnValue: Future<_i2.Either<_i8.Failure, String>>.value(
                   _FakeEither_0<_i8.Failure, String>()))
           as _i7.Future<_i2.Either<_i8.Failure, String>>);
@@ -377,12 +377,12 @@ class MockSeriesLocalDataSource extends _i1.Mock
   }
 
   @override
-  _i7.Future<String> insertWatchlist(_i15.DatabaseModel? movie) =>
-      (super.noSuchMethod(Invocation.method(#insertWatchlist, [movie]),
+  _i7.Future<String> insertWatchlist(_i15.DatabaseModel? series) =>
+      (super.noSuchMethod(Invocation.method(#insertWatchlist, [series]),
           returnValue: Future<String>.value('')) as _i7.Future<String>);
   @override
-  _i7.Future<String> removeWatchlist(_i15.DatabaseModel? movie) =>
-      (super.noSuchMethod(Invocation.method(#removeWatchlist, [movie]),
+  _i7.Future<String> removeWatchlist(_i15.DatabaseModel? series) =>
+      (super.noSuchMethod(Invocation.method(#removeWatchlist, [series]),
           returnValue: Future<String>.value('')) as _i7.Future<String>);
   @override
   _i7.Future<_i15.DatabaseModel?> getSeriesById(int? id) =>
