@@ -4,7 +4,6 @@ import 'package:ditonton/domain/entities/episodes.dart';
 import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/presentation/bloc/series_detail_bloc.dart';
 import 'package:ditonton/presentation/pages/series_detail_page.dart';
-import 'package:ditonton/presentation/provider/series_detail_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -61,47 +60,55 @@ void main() {
     expect(progressFinder, findsOneWidget);
   });
 
-  // testWidgets(
-  //     "'Watchlist button should display add icon when series not added to watchlist'",
-  //     (WidgetTester tester) async {
-  //   when(mockNotifier.seriesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.series).thenReturn(testSeriesDetail);
-  //   when(mockNotifier.episodesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.seriesEpisodes).thenReturn(<Episodes>[]);
-  //   when(mockNotifier.seasonValue).thenReturn(0);
-  //   when(mockNotifier.season).thenReturn(<int>[]);
-  //   when(mockNotifier.recommendationState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.seriesRecommendations).thenReturn(<Series>[]);
-  //   when(mockNotifier.isAddedToWatchlist).thenReturn(false);
-  //   when(mockNotifier.id).thenReturn(1);
+  testWidgets(
+      "'Watchlist button should display add icon when series not added to watchlist'",
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state.copyWith()).thenReturn(SeriesDetailState(
+      isAdd: false,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Loaded,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Loaded,
+      episode: [],
+      episodeState: RequestState.Loaded,
+      id: 1,
+      seasonValue: 0,
+      season: [],
+    ));
 
-  //   final watchlistButtonIcon = find.byIcon(Icons.add);
+    final watchlistButtonIcon = find.byIcon(Icons.add);
 
-  //   await tester.pumpWidget(_makeTestableWidget(SeriesDetailPage(id: 1)));
+    await tester.pumpWidget(_makeTestableWidget(SeriesDetailPage(id: 1)));
 
-  //   expect(watchlistButtonIcon, findsOneWidget);
-  // });
+    expect(watchlistButtonIcon, findsOneWidget);
+  });
 
-  // testWidgets(
-  //     'Watchlist button should dispay check icon when series is added to wathclist',
-  //     (WidgetTester tester) async {
-  //   when(mockNotifier.seriesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.series).thenReturn(testSeriesDetail);
-  //   when(mockNotifier.episodesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.seriesEpisodes).thenReturn(<Episodes>[]);
-  //   when(mockNotifier.seasonValue).thenReturn(0);
-  //   when(mockNotifier.season).thenReturn(<int>[]);
-  //   when(mockNotifier.recommendationState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.seriesRecommendations).thenReturn(<Series>[]);
-  //   when(mockNotifier.isAddedToWatchlist).thenReturn(true);
-  //   when(mockNotifier.id).thenReturn(1);
+  testWidgets(
+      'Watchlist button should dispay check icon when series is added to wathclist',
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state.copyWith()).thenReturn(SeriesDetailState(
+      isAdd: true,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Loaded,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Loaded,
+      episode: [],
+      episodeState: RequestState.Loaded,
+      id: 1,
+      seasonValue: 0,
+      season: [],
+    ));
 
-  //   final watchlistButtonIcon = find.byIcon(Icons.check);
+    final watchlistButtonIcon = find.byIcon(Icons.check);
 
-  //   await tester.pumpWidget(_makeTestableWidget(SeriesDetailPage(id: 1)));
+    await tester.pumpWidget(_makeTestableWidget(SeriesDetailPage(id: 1)));
 
-  //   expect(watchlistButtonIcon, findsOneWidget);
-  // });
+    expect(watchlistButtonIcon, findsOneWidget);
+  });
 
   // testWidgets(
   //     'Watchlist button should display Snackbar when added to watchlist',

@@ -97,8 +97,12 @@ void main() {
     await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
 
     final cardFinder = find.byType(WatchlistCard);
+    final textFinder = find.text("Watchlist");
+    final tmovieFinder = find.text("title");
 
     expect(cardFinder, findsOneWidget);
+    expect(textFinder, findsOneWidget);
+    expect(tmovieFinder, findsOneWidget);
   });
 
   testWidgets('Page should display text with message when Error',
