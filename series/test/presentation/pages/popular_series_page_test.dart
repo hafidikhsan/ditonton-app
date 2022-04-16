@@ -34,10 +34,10 @@ void main() {
     );
   }
 
-  final tSeries = Series(
+  const tSeries = Series(
     backdropPath: 'backdropPath',
     firstAir: 'firstAir',
-    genreIds: const [1, 2, 3],
+    genreIds: [1, 2, 3],
     id: 1,
     name: 'Moon Knight',
     originalName: 'originalName',
@@ -54,7 +54,7 @@ void main() {
         .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
     when(() => popularSeriesBloc.state).thenReturn(PopularSeriesLoading());
 
-    await tester.pumpWidget(_makeTestableWidget(PopularSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const PopularSeriesPage()));
 
     final progressFinder = find.byType(CircularProgressIndicator);
     final centerFinder = find.byType(Center);
@@ -69,11 +69,11 @@ void main() {
         .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
     when(() => popularSeriesBloc.state).thenReturn(PopularSeriesLoading());
     when(() => popularSeriesBloc.stream).thenAnswer(
-        (_) => Stream.value(PopularSeriesHasData(const <Series>[])));
+        (_) => Stream.value(const PopularSeriesHasData(<Series>[])));
     when(() => popularSeriesBloc.state)
-        .thenReturn(PopularSeriesHasData(const <Series>[]));
+        .thenReturn(const PopularSeriesHasData(<Series>[]));
 
-    await tester.pumpWidget(_makeTestableWidget(PopularSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const PopularSeriesPage()));
 
     final progressFinder = find.byType(ListView);
 
@@ -86,11 +86,11 @@ void main() {
         .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
     when(() => popularSeriesBloc.state).thenReturn(PopularSeriesLoading());
     when(() => popularSeriesBloc.stream).thenAnswer(
-        (_) => Stream.value(PopularSeriesHasData(<Series>[tSeries])));
+        (_) => Stream.value(const PopularSeriesHasData(<Series>[tSeries])));
     when(() => popularSeriesBloc.state)
-        .thenReturn(PopularSeriesHasData(<Series>[tSeries]));
+        .thenReturn(const PopularSeriesHasData(<Series>[tSeries]));
 
-    await tester.pumpWidget(_makeTestableWidget(PopularSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const PopularSeriesPage()));
 
     final progressFinder = find.byType(SeriesCard);
 
@@ -99,14 +99,14 @@ void main() {
 
   testWidgets('Page should display text with message when Error',
       (WidgetTester tester) async {
-    when(() => popularSeriesBloc.stream)
-        .thenAnswer((_) => Stream.value(PopularSeriesError("Error Massage")));
+    when(() => popularSeriesBloc.stream).thenAnswer(
+        (_) => Stream.value(const PopularSeriesError("Error Massage")));
     when(() => popularSeriesBloc.state)
-        .thenReturn(PopularSeriesError("Error Massage"));
+        .thenReturn(const PopularSeriesError("Error Massage"));
 
     final textFinder = find.byKey(const Key('error_message'));
 
-    await tester.pumpWidget(_makeTestableWidget(PopularSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const PopularSeriesPage()));
 
     expect(textFinder, findsOneWidget);
   });

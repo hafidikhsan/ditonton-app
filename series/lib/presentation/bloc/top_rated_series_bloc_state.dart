@@ -14,7 +14,7 @@ class TopRatedSeriesLoading extends TopRatedSeriesBlocState {}
 class TopRatedSeriesError extends TopRatedSeriesBlocState {
   final String message;
 
-  TopRatedSeriesError(this.message);
+  const TopRatedSeriesError(this.message);
 
   @override
   List<Object> get props => [message];
@@ -23,7 +23,7 @@ class TopRatedSeriesError extends TopRatedSeriesBlocState {
 class TopRatedSeriesHasData extends TopRatedSeriesBlocState {
   final List<Series> result;
 
-  TopRatedSeriesHasData(this.result);
+  const TopRatedSeriesHasData(this.result);
 
   @override
   List<Object> get props => [result];

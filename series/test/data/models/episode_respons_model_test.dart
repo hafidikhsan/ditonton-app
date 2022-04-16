@@ -7,7 +7,7 @@ import 'package:series/data/models/episodes_model.dart';
 import '../../json_reader.dart';
 
 void main() {
-  final tEpisodesModel = Episode(
+  const tEpisodesModel = Episode(
     id: 2239811,
     name: 'The Goldfish Problem',
     airDate: '2022-03-30',
@@ -20,7 +20,7 @@ void main() {
     voteCount: 17,
   );
 
-  final tEpisodesRespons = EpisodesRespons(
+  const tEpisodesRespons = EpisodesRespons(
     id: 130604,
     episodes: <Episode>[tEpisodesModel],
     name: "Season 1",
@@ -29,7 +29,7 @@ void main() {
     seasonNumber: 1,
   );
 
-  final tEpisodeResponseModel = EpisodesRespons(
+  const tEpisodeResponseModel = EpisodesRespons(
     episodes: <Episode>[tEpisodesModel],
     id: 1,
     name: 'Name',

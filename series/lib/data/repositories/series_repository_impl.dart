@@ -1,15 +1,6 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-// import 'package:ditonton/data/datasources/series_local_data_source.dart';
-// import 'package:ditonton/data/datasources/series_remote_data_source.dart';
-// import 'package:ditonton/data/models/database_model.dart';
-// import 'package:ditonton/domain/entities/episodes.dart';
-// import 'package:ditonton/domain/entities/series.dart';
-// import 'package:ditonton/domain/entities/series_detail.dart';
-// import 'package:ditonton/domain/repositories/series_repository.dart';
-// import 'package:ditonton/common/exception.dart';
-// import 'package:ditonton/common/failure.dart';
 import 'package:common/common.dart';
 import 'package:series/data/datasource/series_local_data_source.dart';
 import 'package:series/data/datasource/series_remote_data_source.dart';
@@ -151,7 +142,7 @@ class SeriesRepositoryImpl implements SeriesRepository {
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

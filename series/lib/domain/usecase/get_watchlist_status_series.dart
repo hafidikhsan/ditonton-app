@@ -1,4 +1,3 @@
-// import 'package:ditonton/domain/repositories/series_repository.dart';
 import 'package:series/domain/repositories/series_repository.dart';
 
 class GetWatchListStatusSeries {

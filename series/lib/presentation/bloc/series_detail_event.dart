@@ -10,7 +10,7 @@ abstract class SeriesDetailEvent extends Equatable {
 class OnSeriesDetail extends SeriesDetailEvent {
   final int id;
 
-  OnSeriesDetail(this.id);
+  const OnSeriesDetail(this.id);
 
   @override
   List<Object> get props => [id];
@@ -20,7 +20,7 @@ class OnSeasonValue extends SeriesDetailEvent {
   final int season;
   final int id;
 
-  OnSeasonValue(this.season, this.id);
+  const OnSeasonValue(this.season, this.id);
 
   @override
   List<Object> get props => [season, id];
@@ -30,7 +30,7 @@ class OnSeriesEpisode extends SeriesDetailEvent {
   final int id;
   final int season;
 
-  OnSeriesEpisode(this.id, this.season);
+  const OnSeriesEpisode(this.id, this.season);
 
   @override
   List<Object> get props => [id, season];
@@ -39,7 +39,7 @@ class OnSeriesEpisode extends SeriesDetailEvent {
 class OnLoadWatchlistStatus extends SeriesDetailEvent {
   final int id;
 
-  OnLoadWatchlistStatus(this.id);
+  const OnLoadWatchlistStatus(this.id);
 
   @override
   List<Object> get props => [id];
@@ -48,7 +48,7 @@ class OnLoadWatchlistStatus extends SeriesDetailEvent {
 class OnAddDatabase extends SeriesDetailEvent {
   final SeriesDetail series;
 
-  OnAddDatabase(this.series);
+  const OnAddDatabase(this.series);
 
   @override
   List<Object> get props => [series];
@@ -57,7 +57,7 @@ class OnAddDatabase extends SeriesDetailEvent {
 class OnRemoveDatabase extends SeriesDetailEvent {
   final SeriesDetail series;
 
-  OnRemoveDatabase(this.series);
+  const OnRemoveDatabase(this.series);
 
   @override
   List<Object> get props => [series];

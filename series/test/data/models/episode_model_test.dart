@@ -7,7 +7,7 @@ import 'package:series/domain/entities/episodes.dart';
 import '../../json_reader.dart';
 
 void main() {
-  final tEpisodeModel = Episode(
+  const tEpisodeModel = Episode(
     id: 2239811,
     name: 'The Goldfish Problem',
     airDate: '2022-03-30',
@@ -20,7 +20,7 @@ void main() {
     voteCount: 17,
   );
 
-  final tEpisode = Episodes(
+  const tEpisode = Episodes(
     id: 2239811,
     name: 'The Goldfish Problem',
     airDate: '2022-03-30',
@@ -33,7 +33,7 @@ void main() {
     voteCount: 17,
   );
 
-  final tEpisodeFromJson = Episode(
+  const tEpisodeFromJson = Episode(
     id: 2239811,
     name: "The Goldfish Problem",
     overview:

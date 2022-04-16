@@ -32,22 +32,23 @@ void main() {
 
   testWidgets('Page should display progress bar when loading',
       (WidgetTester tester) async {
-    when(() => seriesDetailBloc.state.copyWith()).thenReturn(SeriesDetailState(
+    when(() => seriesDetailBloc.state.copyWith())
+        .thenReturn(const SeriesDetailState(
       isAdd: false,
       message: '',
       messageWatchlist: '',
-      recomment: const [],
+      recomment: [],
       recommentState: RequestState.Loading,
       resultSeries: testSeriesDetail,
       resultSeriesState: RequestState.Loading,
-      episode: const [],
+      episode: [],
       episodeState: RequestState.Loading,
       id: 1,
       seasonValue: 1,
-      season: const [],
+      season: [],
     ));
 
-    await tester.pumpWidget(_makeTestableWidget(SeriesDetailPage(
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(
       id: 1,
     )));
 
@@ -59,24 +60,25 @@ void main() {
   testWidgets(
       "'Watchlist button should display add icon when series not added to watchlist'",
       (WidgetTester tester) async {
-    when(() => seriesDetailBloc.state.copyWith()).thenReturn(SeriesDetailState(
+    when(() => seriesDetailBloc.state.copyWith())
+        .thenReturn(const SeriesDetailState(
       isAdd: false,
       message: '',
       messageWatchlist: '',
-      recomment: const [],
+      recomment: [],
       recommentState: RequestState.Loaded,
       resultSeries: testSeriesDetail,
       resultSeriesState: RequestState.Loaded,
-      episode: const [],
+      episode: [],
       episodeState: RequestState.Loaded,
       id: 1,
       seasonValue: 0,
-      season: const [],
+      season: [],
     ));
 
     final watchlistButtonIcon = find.byIcon(Icons.add);
 
-    await tester.pumpWidget(_makeTestableWidget(SeriesDetailPage(id: 1)));
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(id: 1)));
 
     expect(watchlistButtonIcon, findsOneWidget);
   });
@@ -84,24 +86,25 @@ void main() {
   testWidgets(
       'Watchlist button should dispay check icon when series is added to wathclist',
       (WidgetTester tester) async {
-    when(() => seriesDetailBloc.state.copyWith()).thenReturn(SeriesDetailState(
+    when(() => seriesDetailBloc.state.copyWith())
+        .thenReturn(const SeriesDetailState(
       isAdd: true,
       message: '',
       messageWatchlist: '',
-      recomment: const [],
+      recomment: [],
       recommentState: RequestState.Loaded,
       resultSeries: testSeriesDetail,
       resultSeriesState: RequestState.Loaded,
-      episode: const [],
+      episode: [],
       episodeState: RequestState.Loaded,
       id: 1,
       seasonValue: 0,
-      season: const [],
+      season: [],
     ));
 
     final watchlistButtonIcon = find.byIcon(Icons.check);
 
-    await tester.pumpWidget(_makeTestableWidget(SeriesDetailPage(id: 1)));
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(id: 1)));
 
     expect(watchlistButtonIcon, findsOneWidget);
   });

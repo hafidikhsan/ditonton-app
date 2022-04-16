@@ -3,12 +3,12 @@ import 'package:series/data/models/genre_model.dart';
 import 'package:series/domain/entities/genre.dart';
 
 void main() {
-  final tGenreModel = GenreModel(
+  const tGenreModel = GenreModel(
     id: 1,
     name: 'Action',
   );
 
-  final tGenre = Genre(
+  const tGenre = Genre(
     id: 1,
     name: 'Action',
   );

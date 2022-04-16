@@ -1,9 +1,8 @@
-// import 'package:ditonton/data/models/episodes_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:series/data/models/episodes_model.dart';
 
 class EpisodesRespons extends Equatable {
-  EpisodesRespons({
+  const EpisodesRespons({
     required this.id,
     required this.episodes,
     required this.name,

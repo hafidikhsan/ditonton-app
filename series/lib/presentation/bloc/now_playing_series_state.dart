@@ -14,7 +14,7 @@ class NowPlayingSeriesLoading extends NowPlayingSeriesState {}
 class NowPlayingSeriesError extends NowPlayingSeriesState {
   final String message;
 
-  NowPlayingSeriesError(this.message);
+  const NowPlayingSeriesError(this.message);
 
   @override
   List<Object> get props => [message];
@@ -23,7 +23,7 @@ class NowPlayingSeriesError extends NowPlayingSeriesState {
 class NowPlayingSeriesHasData extends NowPlayingSeriesState {
   final List<Series> result;
 
-  NowPlayingSeriesHasData(this.result);
+  const NowPlayingSeriesHasData(this.result);
 
   @override
   List<Object> get props => [result];

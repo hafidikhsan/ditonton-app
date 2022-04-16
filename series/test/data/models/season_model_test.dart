@@ -7,7 +7,7 @@ import 'package:series/domain/entities/season.dart';
 import '../../json_reader.dart';
 
 void main() {
-  final tSeasonModel = Season(
+  const tSeasonModel = Season(
     id: 1,
     name: 'Name',
     overview: 'overview.',
@@ -16,7 +16,7 @@ void main() {
     posterPath: '/path.jpg',
   );
 
-  final tSeason = Seasons(
+  const tSeason = Seasons(
     id: 1,
     name: 'Name',
     overview: 'overview.',

@@ -7,10 +7,10 @@ import 'package:series/domain/entities/series.dart';
 import '../../json_reader.dart';
 
 void main() {
-  final tSeriesModel = SeriesModel(
+  const tSeriesModel = SeriesModel(
     backdropPath: 'backdropPath',
     firstAir: "first air",
-    genreIds: const [1, 2, 3],
+    genreIds: [1, 2, 3],
     id: 1,
     name: 'Name',
     originalName: 'originalName',
@@ -21,10 +21,10 @@ void main() {
     voteCount: 1,
   );
 
-  final tSeries = Series(
+  const tSeries = Series(
     backdropPath: 'backdropPath',
     firstAir: "first air",
-    genreIds: const [1, 2, 3],
+    genreIds: [1, 2, 3],
     id: 1,
     name: 'Name',
     originalName: 'originalName',

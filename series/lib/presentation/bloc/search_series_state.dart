@@ -14,7 +14,7 @@ class SearchSeriesLoading extends SearchSeriesState {}
 class SearchSeriesError extends SearchSeriesState {
   final String message;
 
-  SearchSeriesError(this.message);
+  const SearchSeriesError(this.message);
 
   @override
   List<Object> get props => [message];
@@ -23,7 +23,7 @@ class SearchSeriesError extends SearchSeriesState {
 class SearchSeriesHasData extends SearchSeriesState {
   final List<Series> result;
 
-  SearchSeriesHasData(this.result);
+  const SearchSeriesHasData(this.result);
 
   @override
   List<Object> get props => [result];

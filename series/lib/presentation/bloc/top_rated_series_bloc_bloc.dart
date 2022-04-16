@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-// import 'package:ditonton/domain/entities/series.dart';
-// import 'package:ditonton/domain/usecases/get_top_rated_series.dart';
 import 'package:equatable/equatable.dart';
 import 'package:series/domain/entities/series.dart';
 import 'package:series/domain/usecase/get_top_rated_series.dart';

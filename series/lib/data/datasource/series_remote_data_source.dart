@@ -1,15 +1,6 @@
 import 'dart:convert';
-// import 'package:ditonton/data/models/episode_respons_model.dart';
-// import 'package:ditonton/data/models/episodes_model.dart';
-// import 'package:ditonton/data/models/series_detail_model.dart';
-// import 'package:ditonton/data/models/series_model.dart';
-// import 'package:ditonton/data/models/series_response.dart';
-// import 'package:ditonton/common/exception.dart';
 import 'package:common/common.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'package:flutter/services.dart';
-import 'package:http/io_client.dart';
 import 'package:series/data/models/episode_respons_model.dart';
 import 'package:series/data/models/episodes_model.dart';
 import 'package:series/data/models/series_detail_model.dart';

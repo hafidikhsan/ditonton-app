@@ -36,10 +36,10 @@ void main() {
     );
   }
 
-  final tSeries = Series(
+  const tSeries = Series(
     backdropPath: 'backdropPath',
     firstAir: 'firstAir',
-    genreIds: const [1, 2, 3],
+    genreIds: [1, 2, 3],
     id: 1,
     name: 'Moon Knight',
     originalName: 'originalName',
@@ -56,7 +56,7 @@ void main() {
         .thenAnswer((_) => Stream.value(TopRatedSeriesLoading()));
     when(() => topRatedSeriesBloc.state).thenReturn(TopRatedSeriesLoading());
 
-    await tester.pumpWidget(_makeTestableWidget(TopRatedSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const TopRatedSeriesPage()));
 
     final progressFinder = find.byType(CircularProgressIndicator);
     final centerFinder = find.byType(Center);
@@ -71,11 +71,11 @@ void main() {
         .thenAnswer((_) => Stream.value(TopRatedSeriesLoading()));
     when(() => topRatedSeriesBloc.state).thenReturn(TopRatedSeriesLoading());
     when(() => topRatedSeriesBloc.stream).thenAnswer(
-        (_) => Stream.value(TopRatedSeriesHasData(const <Series>[])));
+        (_) => Stream.value(const TopRatedSeriesHasData(<Series>[])));
     when(() => topRatedSeriesBloc.state)
-        .thenReturn(TopRatedSeriesHasData(const <Series>[]));
+        .thenReturn(const TopRatedSeriesHasData(<Series>[]));
 
-    await tester.pumpWidget(_makeTestableWidget(TopRatedSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const TopRatedSeriesPage()));
 
     final progressFinder = find.byType(ListView);
 
@@ -88,11 +88,11 @@ void main() {
         .thenAnswer((_) => Stream.value(TopRatedSeriesLoading()));
     when(() => topRatedSeriesBloc.state).thenReturn(TopRatedSeriesLoading());
     when(() => topRatedSeriesBloc.stream).thenAnswer(
-        (_) => Stream.value(TopRatedSeriesHasData(<Series>[tSeries])));
+        (_) => Stream.value(const TopRatedSeriesHasData(<Series>[tSeries])));
     when(() => topRatedSeriesBloc.state)
-        .thenReturn(TopRatedSeriesHasData(<Series>[tSeries]));
+        .thenReturn(const TopRatedSeriesHasData(<Series>[tSeries]));
 
-    await tester.pumpWidget(_makeTestableWidget(TopRatedSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const TopRatedSeriesPage()));
 
     final progressFinder = find.byType(SeriesCard);
 
@@ -101,14 +101,14 @@ void main() {
 
   testWidgets('Page should display text with message when Error',
       (WidgetTester tester) async {
-    when(() => topRatedSeriesBloc.stream)
-        .thenAnswer((_) => Stream.value(TopRatedSeriesError("Error Massage")));
+    when(() => topRatedSeriesBloc.stream).thenAnswer(
+        (_) => Stream.value(const TopRatedSeriesError("Error Massage")));
     when(() => topRatedSeriesBloc.state)
-        .thenReturn(TopRatedSeriesError("Error Massage"));
+        .thenReturn(const TopRatedSeriesError("Error Massage"));
 
     final textFinder = find.byKey(const Key('error_message'));
 
-    await tester.pumpWidget(_makeTestableWidget(TopRatedSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const TopRatedSeriesPage()));
 
     expect(textFinder, findsOneWidget);
   });

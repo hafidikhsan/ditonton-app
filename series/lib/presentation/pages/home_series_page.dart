@@ -1,19 +1,7 @@
-// import 'package:ditonton/common/constants.dart';
 import 'package:common/common.dart';
-// import 'package:ditonton/presentation/bloc/now_playing_series_bloc.dart';
-// import 'package:ditonton/presentation/bloc/popular_series_bloc.dart';
-// import 'package:ditonton/presentation/bloc/top_rated_series_bloc_bloc.dart';
-// import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:about/about.dart';
 import 'package:movie/movie.dart';
 import 'package:watchlist/watchlist.dart';
-// import 'package:ditonton/presentation/pages/home_movie_page.dart';
-// import 'package:ditonton/presentation/pages/popular_series_page.dart';
-// import 'package:ditonton/presentation/pages/search_page.dart';
-// import 'package:ditonton/presentation/pages/top_rated_series_page.dart';
-// import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
-// import 'package:ditonton/presentation/widgets/series_poster_list.dart';
-// import 'package:ditonton/presentation/widgets/sub_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:series/presentation/bloc/now_playing_series_bloc.dart';
@@ -25,6 +13,8 @@ import 'package:series/presentation/widgets/series_poster_list.dart';
 
 class HomeSeriesPage extends StatefulWidget {
   static const ROUTE_NAME = '/home-series';
+
+  const HomeSeriesPage({Key? key}) : super(key: key);
 
   @override
   State<HomeSeriesPage> createState() => _HomeSeriesPageState();
@@ -47,7 +37,7 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
       drawer: Drawer(
         child: Column(
           children: [
-            UserAccountsDrawerHeader(
+            const UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/circle-g.png'),
               ),
@@ -55,8 +45,8 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
               accountEmail: Text('ditonton@dicoding.com'),
             ),
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home'),
+              leading: const Icon(Icons.home),
+              title: const Text('Home'),
               onTap: () {
                 Navigator.pushReplacementNamed(
                   context,
@@ -65,8 +55,8 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.movie),
-              title: Text('Movies'),
+              leading: const Icon(Icons.movie),
+              title: const Text('Movies'),
               onTap: () {
                 Navigator.pushReplacementNamed(
                   context,
@@ -75,15 +65,15 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.tv),
-              title: Text('Series'),
+              leading: const Icon(Icons.tv),
+              title: const Text('Series'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: Icon(Icons.save_alt),
-              title: Text('Watchlist'),
+              leading: const Icon(Icons.save_alt),
+              title: const Text('Watchlist'),
               onTap: () {
                 Navigator.pushNamed(
                   context,
@@ -98,14 +88,14 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
                   AboutPage.ROUTE_NAME,
                 );
               },
-              leading: Icon(Icons.info_outline),
-              title: Text('About'),
+              leading: const Icon(Icons.info_outline),
+              title: const Text('About'),
             ),
           ],
         ),
       ),
       appBar: AppBar(
-        title: Text('Series'),
+        title: const Text('Series'),
         actions: [
           IconButton(
             onPressed: () {
@@ -115,7 +105,7 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
                 arguments: false,
               );
             },
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           )
         ],
       ),
@@ -132,14 +122,14 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
               BlocBuilder<NowPlayingSeriesBloc, NowPlayingSeriesState>(
                 builder: (context, data) {
                   if (data is NowPlayingSeriesLoading) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else if (data is NowPlayingSeriesHasData) {
                     return SeriesList(data.result);
                   } else if (data is NowPlayingSeriesError) {
                     return Center(
-                      key: Key('error_message'),
+                      key: const Key('error_message'),
                       child: Text(data.message),
                     );
                   } else {
@@ -157,14 +147,14 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
               BlocBuilder<PopularSeriesBloc, PopularSeriesState>(
                 builder: (context, data) {
                   if (data is PopularSeriesLoading) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else if (data is PopularSeriesHasData) {
                     return SeriesList(data.result);
                   } else if (data is PopularSeriesError) {
                     return Center(
-                      key: Key('error_message'),
+                      key: const Key('error_message'),
                       child: Text(data.message),
                     );
                   } else {
@@ -182,14 +172,14 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
               BlocBuilder<TopRatedSeriesBlocBloc, TopRatedSeriesBlocState>(
                 builder: (context, data) {
                   if (data is TopRatedSeriesLoading) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else if (data is TopRatedSeriesHasData) {
                     return SeriesList(data.result);
                   } else if (data is TopRatedSeriesError) {
                     return Center(
-                      key: Key('error_message'),
+                      key: const Key('error_message'),
                       child: Text(data.message),
                     );
                   } else {

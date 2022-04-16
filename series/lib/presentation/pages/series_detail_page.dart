@@ -1,12 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:ditonton/common/constants.dart';
-// import 'package:ditonton/common/state_enum.dart';
 import 'package:common/common.dart';
-// import 'package:ditonton/domain/entities/episodes.dart';
-// import 'package:ditonton/domain/entities/genre.dart';
-// import 'package:ditonton/domain/entities/series.dart';
-// import 'package:ditonton/domain/entities/series_detail.dart';
-// import 'package:ditonton/presentation/bloc/series_detail_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -20,7 +13,7 @@ class SeriesDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail-series';
 
   final int id;
-  SeriesDetailPage({required this.id});
+  const SeriesDetailPage({Key? key, required this.id}) : super(key: key);
 
   @override
   State<SeriesDetailPage> createState() => _SeriesDetailPageState();
@@ -42,7 +35,7 @@ class _SeriesDetailPageState extends State<SeriesDetailPage> {
       body: BlocBuilder<SeriesDetailBloc, SeriesDetailState>(
         builder: (context, data) {
           if (data.resultSeriesState == RequestState.Loading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (data.resultSeriesState == RequestState.Loaded) {
@@ -58,7 +51,7 @@ class _SeriesDetailPageState extends State<SeriesDetailPage> {
             );
           } else if (data.resultSeriesState == RequestState.Error) {
             return Center(
-              key: Key('error_message'),
+              key: const Key('error_message'),
               child: Text(
                 data.message,
                 style: kHeading6,
@@ -85,8 +78,10 @@ class DetailContent extends StatelessWidget {
   final bool isAddedWatchlist;
   final int id;
 
-  DetailContent(this.series, this.recommendations, this.episodes,
-      this.isAddedWatchlist, this.id);
+  const DetailContent(this.series, this.recommendations, this.episodes,
+      this.isAddedWatchlist, this.id,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -96,17 +91,17 @@ class DetailContent extends StatelessWidget {
         CachedNetworkImage(
           imageUrl: 'https://image.tmdb.org/t/p/w500${series.posterPath}',
           width: screenWidth,
-          placeholder: (context, url) => Center(
+          placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
           ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
           child: DraggableScrollableSheet(
             builder: (context, scrollController) {
               return Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: kRichBlack,
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(16),
@@ -161,20 +156,22 @@ class DetailContent extends StatelessWidget {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   if (!isAddedWatchlist) {
-                                    context.read<SeriesDetailBloc>()
-                                      ..add(OnAddDatabase(series));
+                                    context
+                                        .read<SeriesDetailBloc>()
+                                        .add(OnAddDatabase(series));
                                   } else {
-                                    context.read<SeriesDetailBloc>()
-                                      ..add(OnRemoveDatabase(series));
+                                    context
+                                        .read<SeriesDetailBloc>()
+                                        .add(OnRemoveDatabase(series));
                                   }
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     isAddedWatchlist
-                                        ? Icon(Icons.check)
-                                        : Icon(Icons.add),
-                                    Text('Watchlist'),
+                                        ? const Icon(Icons.check)
+                                        : const Icon(Icons.add),
+                                    const Text('Watchlist'),
                                   ],
                                 ),
                               ),
@@ -187,7 +184,7 @@ class DetailContent extends StatelessWidget {
                                 RatingBarIndicator(
                                   rating: series.voteAverage / 2,
                                   itemCount: 5,
-                                  itemBuilder: (context, index) => Icon(
+                                  itemBuilder: (context, index) => const Icon(
                                     Icons.star,
                                     color: kMikadoYellow,
                                   ),
@@ -196,7 +193,7 @@ class DetailContent extends StatelessWidget {
                                 Text('${series.voteAverage}')
                               ],
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               'Overview',
                               style: kHeading6,
@@ -204,7 +201,7 @@ class DetailContent extends StatelessWidget {
                             Text(
                               series.overview,
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               'Recommendations',
                               style: kHeading6,
@@ -213,7 +210,7 @@ class DetailContent extends StatelessWidget {
                               builder: (context, data) {
                                 if (data.recommentState ==
                                     RequestState.Loading) {
-                                  return Center(
+                                  return const Center(
                                     child: CircularProgressIndicator(),
                                   );
                                 } else if (data.recommentState ==
@@ -221,7 +218,7 @@ class DetailContent extends StatelessWidget {
                                   return Text(data.message);
                                 } else if (data.recommentState ==
                                     RequestState.Loaded) {
-                                  return Container(
+                                  return SizedBox(
                                     height: (recommendations.isEmpty) ? 0 : 150,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -238,20 +235,21 @@ class DetailContent extends StatelessWidget {
                                               );
                                             },
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.all(
+                                              borderRadius:
+                                                  const BorderRadius.all(
                                                 Radius.circular(8),
                                               ),
                                               child: CachedNetworkImage(
                                                 imageUrl:
                                                     'https://image.tmdb.org/t/p/w500${serie.posterPath}',
                                                 placeholder: (context, url) =>
-                                                    Center(
+                                                    const Center(
                                                   child:
                                                       CircularProgressIndicator(),
                                                 ),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        Icon(Icons.error),
+                                                        const Icon(Icons.error),
                                               ),
                                             ),
                                           ),
@@ -265,7 +263,7 @@ class DetailContent extends StatelessWidget {
                                 }
                               },
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               'Seasons',
                               style: kHeading6,
@@ -288,17 +286,18 @@ class DetailContent extends StatelessWidget {
                                     }).toList(),
                                     isExpanded: true,
                                     onChanged: (final int? newValue) {
-                                      context.read<SeriesDetailBloc>()
-                                        ..add(OnSeasonValue(
-                                          newValue!,
-                                          series.id,
-                                        ));
+                                      context
+                                          .read<SeriesDetailBloc>()
+                                          .add(OnSeasonValue(
+                                            newValue!,
+                                            series.id,
+                                          ));
                                     },
                                   ),
                                 );
                               },
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               'Episodes',
                               style: kHeading6,
@@ -306,7 +305,7 @@ class DetailContent extends StatelessWidget {
                             BlocBuilder<SeriesDetailBloc, SeriesDetailState>(
                               builder: (context, data) {
                                 if (data.episodeState == RequestState.Loading) {
-                                  return Center(
+                                  return const Center(
                                     child: CircularProgressIndicator(),
                                   );
                                 } else if (data.episodeState ==
@@ -314,104 +313,97 @@ class DetailContent extends StatelessWidget {
                                   return Text(data.message);
                                 } else if (data.episodeState ==
                                     RequestState.Loaded) {
-                                  return Container(
-                                    child: ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        final episode = episodes[index];
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 4.0,
-                                            vertical: 10.0,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 1,
-                                                child: Container(
-                                                  child: ClipRRect(
-                                                    child: (episode.stillPath ==
-                                                            null)
-                                                        ? Center(
-                                                            child: Container(
-                                                              width: 220,
-                                                              height: 70,
-                                                              color:
-                                                                  Colors.grey,
-                                                              child: Icon(
-                                                                Icons.error,
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : CachedNetworkImage(
-                                                            imageUrl:
-                                                                '$BASE_IMAGE_URL${episode.stillPath}',
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      final episode = episodes[index];
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 4.0,
+                                          vertical: 10.0,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: ClipRRect(
+                                                child: (episode.stillPath ==
+                                                        null)
+                                                    ? Center(
+                                                        child: Container(
+                                                          width: 220,
+                                                          height: 70,
+                                                          color: Colors.grey,
+                                                          child: const Icon(
+                                                            Icons.error,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : CachedNetworkImage(
+                                                        imageUrl:
+                                                            '$BASE_IMAGE_URL${episode.stillPath}',
+                                                        width: 220,
+                                                        placeholder:
+                                                            (context, url) =>
+                                                                const Center(
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        ),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Center(
+                                                          child: Container(
                                                             width: 220,
-                                                            placeholder:
-                                                                (context,
-                                                                        url) =>
-                                                                    Center(
-                                                              child:
-                                                                  CircularProgressIndicator(),
-                                                            ),
-                                                            errorWidget:
-                                                                (context, url,
-                                                                        error) =>
-                                                                    Center(
-                                                              child: Container(
-                                                                width: 220,
-                                                                height: 70,
-                                                                color:
-                                                                    Colors.grey,
-                                                                child: Icon(
-                                                                  Icons.error,
-                                                                ),
-                                                              ),
+                                                            height: 70,
+                                                            color: Colors.grey,
+                                                            child: const Icon(
+                                                              Icons.error,
                                                             ),
                                                           ),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                      Radius.circular(8),
-                                                    ),
-                                                  ),
+                                                        ),
+                                                      ),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(8),
                                                 ),
                                               ),
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      left: 10.0,
-                                                    ),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          episode.name,
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: kSubtitle,
-                                                        ),
-                                                        Text(
-                                                          episode.overview,
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: kBodyText,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      itemCount: episodes.length,
-                                    ),
+                                            ),
+                                            Expanded(
+                                                flex: 2,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 10.0,
+                                                  ),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        episode.name,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: kSubtitle,
+                                                      ),
+                                                      Text(
+                                                        episode.overview,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: kBodyText,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    itemCount: episodes.length,
                                   );
                                 } else {
                                   return Container();
@@ -443,7 +435,7 @@ class DetailContent extends StatelessWidget {
             backgroundColor: kRichBlack,
             foregroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
               },

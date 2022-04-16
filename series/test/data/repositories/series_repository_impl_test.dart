@@ -28,10 +28,10 @@ void main() {
     );
   });
 
-  final tSeriesModel = SeriesModel(
+  const tSeriesModel = SeriesModel(
     backdropPath: 'backdropPath',
     firstAir: 'firstAir',
-    genreIds: const [1, 2],
+    genreIds: [1, 2],
     id: 1,
     name: 'name',
     originalName: 'originalName',
@@ -42,10 +42,10 @@ void main() {
     voteCount: 1,
   );
 
-  final tSeries = Series(
+  const tSeries = Series(
     backdropPath: 'backdropPath',
     firstAir: 'firstAir',
-    genreIds: const [1, 2],
+    genreIds: [1, 2],
     id: 1,
     name: 'name',
     originalName: 'originalName',
@@ -184,7 +184,7 @@ void main() {
 
   group('Get Movie Detail', () {
     const tId = 1;
-    final tSeriesResponse = SeriesDetailResponse(
+    const tSeriesResponse = SeriesDetailResponse(
       adult: false,
       backdropPath: 'backdropPath',
       firstAir: '2022-04-08',
@@ -197,7 +197,7 @@ void main() {
       posterPath: 'posterPath',
       voteAverage: 1,
       voteCount: 1,
-      seasons: const [],
+      seasons: [],
     );
 
     test(
@@ -244,7 +244,7 @@ void main() {
   group('Get Episode', () {
     const tId = 1;
 
-    final tEpisode = Episode(
+    const tEpisode = Episode(
       airDate: 'airDate',
       episodeNumber: 1,
       id: 1,

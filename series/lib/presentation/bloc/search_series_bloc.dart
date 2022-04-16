@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-// import 'package:ditonton/domain/entities/series.dart';
-// import 'package:ditonton/domain/usecases/search_series.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:series/domain/entities/series.dart';

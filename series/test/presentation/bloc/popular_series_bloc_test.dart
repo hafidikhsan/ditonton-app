@@ -20,10 +20,10 @@ void main() {
     popularSeriesBloc = PopularSeriesBloc(mockPopularSeries);
   });
 
-  final tSeries = Series(
+  const tSeries = Series(
     backdropPath: 'backdropPath',
     firstAir: 'firstAir',
-    genreIds: const [1, 2, 3],
+    genreIds: [1, 2, 3],
     id: 1,
     name: 'Moon Knight',
     originalName: 'originalName',
@@ -93,7 +93,7 @@ void main() {
     act: (bloc) => bloc.add(LoadPopularSeries()),
     expect: () => [
       PopularSeriesLoading(),
-      PopularSeriesError('Server Failure'),
+      const PopularSeriesError('Server Failure'),
     ],
     verify: (bloc) {
       verify(mockPopularSeries.execute());

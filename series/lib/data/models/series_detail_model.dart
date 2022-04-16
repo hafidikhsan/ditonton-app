@@ -1,13 +1,10 @@
-// import 'package:ditonton/data/models/genre_model.dart';
-// import 'package:ditonton/data/models/season_model.dart';
-// import 'package:ditonton/domain/entities/series_detail.dart';
 import 'package:equatable/equatable.dart';
 import 'package:series/data/models/genre_model.dart';
 import 'package:series/data/models/season_model.dart';
 import 'package:series/domain/entities/series_detail.dart';
 
 class SeriesDetailResponse extends Equatable {
-  SeriesDetailResponse({
+  const SeriesDetailResponse({
     required this.adult,
     required this.backdropPath,
     required this.firstAir,
@@ -74,19 +71,19 @@ class SeriesDetailResponse extends Equatable {
 
   SeriesDetail toEntity() {
     return SeriesDetail(
-      adult: this.adult,
-      backdropPath: this.backdropPath,
-      firstAir: this.firstAir,
-      genres: this.genres.map((genre) => genre.toEntity()).toList(),
-      id: this.id,
-      name: this.name,
-      originalName: this.originalName,
-      overview: this.overview,
-      popularity: this.popularity,
-      posterPath: this.posterPath,
-      voteAverage: this.voteAverage,
-      voteCount: this.voteCount,
-      seasons: this.seasons.map((e) => e.seasonNumber).toList(),
+      adult: adult,
+      backdropPath: backdropPath,
+      firstAir: firstAir,
+      genres: genres.map((genre) => genre.toEntity()).toList(),
+      id: id,
+      name: name,
+      originalName: originalName,
+      overview: overview,
+      popularity: popularity,
+      posterPath: posterPath,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
+      seasons: seasons.map((e) => e.seasonNumber).toList(),
     );
   }
 

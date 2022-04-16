@@ -18,7 +18,7 @@ final testSeriesMap = {
   'isMovie': 0,
 };
 
-final testSeriesDetail = SeriesDetail(
+const testSeriesDetail = SeriesDetail(
   adult: false,
   backdropPath: 'backdropPath',
   genres: [Genre(id: 1, name: 'Action')],
@@ -34,7 +34,7 @@ final testSeriesDetail = SeriesDetail(
   seasons: [],
 );
 
-final testEpisode = Episodes(
+const testEpisode = Episodes(
   airDate: 'airDate',
   episodeNumber: 1,
   id: 1,

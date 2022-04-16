@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Series extends Equatable {
-  Series({
+  const Series({
     required this.backdropPath,
     required this.firstAir,
     required this.genreIds,

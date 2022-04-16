@@ -20,10 +20,10 @@ void main() {
     searchBloc = SearchSeriesBloc(mockSearchSeries);
   });
 
-  final tSeries = Series(
+  const tSeries = Series(
     backdropPath: 'backdropPath',
     firstAir: 'firstAir',
-    genreIds: const [1, 2, 3],
+    genreIds: [1, 2, 3],
     id: 1,
     name: 'Moon Knight',
     originalName: 'originalName',
@@ -48,7 +48,7 @@ void main() {
           .thenAnswer((_) async => Right(tSeriesList));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(OnSeriesQueryChanged(tQuery)),
+    act: (bloc) => bloc.add(const OnSeriesQueryChanged(tQuery)),
     verify: (bloc) {
       verify(mockSearchSeries.execute(tQuery));
     },
@@ -74,7 +74,7 @@ void main() {
           .thenAnswer((_) async => Right(tSeriesList));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(OnSeriesQueryChanged(tQuery)),
+    act: (bloc) => bloc.add(const OnSeriesQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
     expect: () => [
       SearchSeriesLoading(),
@@ -92,11 +92,11 @@ void main() {
           .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(OnSeriesQueryChanged(tQuery)),
+    act: (bloc) => bloc.add(const OnSeriesQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
     expect: () => [
       SearchSeriesLoading(),
-      SearchSeriesError('Server Failure'),
+      const SearchSeriesError('Server Failure'),
     ],
     verify: (bloc) {
       verify(mockSearchSeries.execute(tQuery));

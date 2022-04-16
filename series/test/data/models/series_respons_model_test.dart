@@ -7,10 +7,10 @@ import 'package:series/data/models/series_response.dart';
 import '../../json_reader.dart';
 
 void main() {
-  final tSeriesModel = SeriesModel(
+  const tSeriesModel = SeriesModel(
     backdropPath: '/path.jpg',
     firstAir: "2022-03-24",
-    genreIds: const [1, 2],
+    genreIds: [1, 2],
     id: 1,
     name: 'Name',
     originalName: 'Original Name',
@@ -21,7 +21,7 @@ void main() {
     voteCount: 1,
   );
 
-  final tSeriesResponseModel =
+  const tSeriesResponseModel =
       SeriesResponse(seriesList: <SeriesModel>[tSeriesModel]);
 
   group('fromJson', () {

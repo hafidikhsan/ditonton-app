@@ -9,10 +9,10 @@ import 'package:series/domain/entities/series_detail.dart';
 import '../../json_reader.dart';
 
 void main() {
-  final tSeriesDetailModel = SeriesDetailResponse(
+  const tSeriesDetailModel = SeriesDetailResponse(
     adult: false,
     backdropPath: '/path.jpg',
-    genres: const <GenreModel>[],
+    genres: <GenreModel>[],
     id: 1,
     overview: 'overview.',
     popularity: 1,
@@ -22,13 +22,13 @@ void main() {
     firstAir: '2021-09-03',
     name: 'Name',
     originalName: 'Original Name',
-    seasons: const [],
+    seasons: [],
   );
 
-  final tSeriesDetail = SeriesDetail(
+  const tSeriesDetail = SeriesDetail(
     adult: false,
     backdropPath: '/path.jpg',
-    genres: const <Genre>[],
+    genres: <Genre>[],
     id: 1,
     originalName: 'Original Name',
     overview: 'overview.',
@@ -38,7 +38,7 @@ void main() {
     firstAir: '2021-09-03',
     name: 'Name',
     popularity: 1,
-    seasons: const [],
+    seasons: [],
   );
 
   test('should be a subclass of Series Detail entity', () async {

@@ -69,10 +69,10 @@ void main() {
     );
   }
 
-  final tSeries = Series(
+  const tSeries = Series(
     backdropPath: 'backdropPath',
     firstAir: 'firstAir',
-    genreIds: const [1, 2, 3],
+    genreIds: [1, 2, 3],
     id: 1,
     name: 'Moon Knight',
     originalName: 'originalName',
@@ -95,7 +95,7 @@ void main() {
         .thenAnswer((_) => Stream.value(TopRatedSeriesLoading()));
     when(() => topRatedBloc.state).thenReturn(TopRatedSeriesLoading());
 
-    await tester.pumpWidget(_makeTestableWidget(HomeSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const HomeSeriesPage()));
 
     final progressFinder = find.byType(CircularProgressIndicator);
 
@@ -108,17 +108,17 @@ void main() {
         .thenAnswer((_) => Stream.value(NowPlayingSeriesLoading()));
     when(() => nowPlayingBloc.state).thenReturn(NowPlayingSeriesLoading());
     when(() => nowPlayingBloc.stream).thenAnswer(
-        (_) => Stream.value(NowPlayingSeriesHasData(const <Series>[])));
+        (_) => Stream.value(const NowPlayingSeriesHasData(<Series>[])));
     when(() => nowPlayingBloc.state)
-        .thenReturn(NowPlayingSeriesHasData(const <Series>[]));
+        .thenReturn(const NowPlayingSeriesHasData(<Series>[]));
     when(() => popularBloc.stream).thenAnswer(
-        (_) => Stream.value(PopularSeriesHasData(const <Series>[])));
+        (_) => Stream.value(const PopularSeriesHasData(<Series>[])));
     when(() => popularBloc.state)
-        .thenReturn(PopularSeriesHasData(const <Series>[]));
+        .thenReturn(const PopularSeriesHasData(<Series>[]));
     when(() => topRatedBloc.stream).thenAnswer(
-        (_) => Stream.value(TopRatedSeriesHasData(const <Series>[])));
+        (_) => Stream.value(const TopRatedSeriesHasData(<Series>[])));
     when(() => topRatedBloc.state)
-        .thenReturn(TopRatedSeriesHasData(const <Series>[]));
+        .thenReturn(const TopRatedSeriesHasData(<Series>[]));
     when(() => popularBloc.stream)
         .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
     when(() => popularBloc.state).thenReturn(PopularSeriesLoading());
@@ -126,7 +126,7 @@ void main() {
         .thenAnswer((_) => Stream.value(TopRatedSeriesLoading()));
     when(() => topRatedBloc.state).thenReturn(TopRatedSeriesLoading());
 
-    await tester.pumpWidget(_makeTestableWidget(HomeSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const HomeSeriesPage()));
 
     final progressFinder = find.byType(ListView);
 
@@ -139,17 +139,17 @@ void main() {
         .thenAnswer((_) => Stream.value(NowPlayingSeriesLoading()));
     when(() => nowPlayingBloc.state).thenReturn(NowPlayingSeriesLoading());
     when(() => nowPlayingBloc.stream).thenAnswer(
-        (_) => Stream.value(NowPlayingSeriesHasData(<Series>[tSeries])));
+        (_) => Stream.value(const NowPlayingSeriesHasData(<Series>[tSeries])));
     when(() => nowPlayingBloc.state)
-        .thenReturn(NowPlayingSeriesHasData(<Series>[tSeries]));
+        .thenReturn(const NowPlayingSeriesHasData(<Series>[tSeries]));
     when(() => popularBloc.stream).thenAnswer(
-        (_) => Stream.value(PopularSeriesHasData(<Series>[tSeries])));
+        (_) => Stream.value(const PopularSeriesHasData(<Series>[tSeries])));
     when(() => popularBloc.state)
-        .thenReturn(PopularSeriesHasData(<Series>[tSeries]));
+        .thenReturn(const PopularSeriesHasData(<Series>[tSeries]));
     when(() => topRatedBloc.stream).thenAnswer(
-        (_) => Stream.value(TopRatedSeriesHasData(<Series>[tSeries])));
+        (_) => Stream.value(const TopRatedSeriesHasData(<Series>[tSeries])));
     when(() => topRatedBloc.state)
-        .thenReturn(TopRatedSeriesHasData(<Series>[tSeries]));
+        .thenReturn(const TopRatedSeriesHasData(<Series>[tSeries]));
     when(() => popularBloc.stream)
         .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
     when(() => popularBloc.state).thenReturn(PopularSeriesLoading());
@@ -157,7 +157,7 @@ void main() {
         .thenAnswer((_) => Stream.value(TopRatedSeriesLoading()));
     when(() => topRatedBloc.state).thenReturn(TopRatedSeriesLoading());
 
-    await tester.pumpWidget(_makeTestableWidget(HomeSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const HomeSeriesPage()));
 
     final progressFinder = find.byType(SeriesList);
 
@@ -167,21 +167,21 @@ void main() {
   testWidgets('Page should display text with message when Error',
       (WidgetTester tester) async {
     when(() => nowPlayingBloc.stream).thenAnswer(
-        (_) => Stream.value(NowPlayingSeriesError("Error Massage")));
+        (_) => Stream.value(const NowPlayingSeriesError("Error Massage")));
     when(() => nowPlayingBloc.state)
-        .thenReturn(NowPlayingSeriesError("Error Massage"));
-    when(() => popularBloc.stream)
-        .thenAnswer((_) => Stream.value(PopularSeriesError("Error Massage")));
+        .thenReturn(const NowPlayingSeriesError("Error Massage"));
+    when(() => popularBloc.stream).thenAnswer(
+        (_) => Stream.value(const PopularSeriesError("Error Massage")));
     when(() => popularBloc.state)
-        .thenReturn(PopularSeriesError("Error Massage"));
-    when(() => topRatedBloc.stream)
-        .thenAnswer((_) => Stream.value(TopRatedSeriesError("Error Massage")));
+        .thenReturn(const PopularSeriesError("Error Massage"));
+    when(() => topRatedBloc.stream).thenAnswer(
+        (_) => Stream.value(const TopRatedSeriesError("Error Massage")));
     when(() => topRatedBloc.state)
-        .thenReturn(TopRatedSeriesError("Error Massage"));
+        .thenReturn(const TopRatedSeriesError("Error Massage"));
 
     final textFinder = find.byKey(const Key('error_message'));
 
-    await tester.pumpWidget(_makeTestableWidget(HomeSeriesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const HomeSeriesPage()));
 
     expect(textFinder, findsWidgets);
   });
