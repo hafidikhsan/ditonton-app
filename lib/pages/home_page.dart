@@ -1,8 +1,3 @@
-// import 'package:ditonton/presentation/bloc/popular_movie_bloc.dart';
-// import 'package:ditonton/presentation/bloc/popular_series_bloc.dart';
-// import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';
-// import 'package:ditonton/presentation/bloc/top_rated_series_bloc_bloc.dart';
-// import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:about/about.dart';
 import 'package:common/common.dart';
 import 'package:series/series.dart';
