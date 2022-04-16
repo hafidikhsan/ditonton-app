@@ -1,14 +1,7 @@
 import 'dart:convert';
 
-// import 'package:ditonton/data/models/movie_detail_model.dart';
-// import 'package:ditonton/data/models/movie_model.dart';
-// import 'package:ditonton/data/models/movie_response.dart';
-// import 'package:ditonton/common/exception.dart';
 import 'package:common/common.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'package:flutter/services.dart';
-import 'package:http/io_client.dart';
 import 'package:movie/data/models/movie_detail_model.dart';
 import 'package:movie/data/models/movie_model.dart';
 import 'package:movie/data/models/movie_response.dart';

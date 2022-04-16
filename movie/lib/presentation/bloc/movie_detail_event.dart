@@ -10,7 +10,7 @@ abstract class MovieDetailEvent extends Equatable {
 class OnMovieDetail extends MovieDetailEvent {
   final int id;
 
-  OnMovieDetail(this.id);
+  const OnMovieDetail(this.id);
 
   @override
   List<Object> get props => [id];
@@ -19,7 +19,7 @@ class OnMovieDetail extends MovieDetailEvent {
 class OnLoadWatchlistStatus extends MovieDetailEvent {
   final int id;
 
-  OnLoadWatchlistStatus(this.id);
+  const OnLoadWatchlistStatus(this.id);
 
   @override
   List<Object> get props => [id];
@@ -28,7 +28,7 @@ class OnLoadWatchlistStatus extends MovieDetailEvent {
 class OnAddDatabase extends MovieDetailEvent {
   final MovieDetail movie;
 
-  OnAddDatabase(this.movie);
+  const OnAddDatabase(this.movie);
 
   @override
   List<Object> get props => [movie];
@@ -37,7 +37,7 @@ class OnAddDatabase extends MovieDetailEvent {
 class OnRemoveDatabase extends MovieDetailEvent {
   final MovieDetail movie;
 
-  OnRemoveDatabase(this.movie);
+  const OnRemoveDatabase(this.movie);
 
   @override
   List<Object> get props => [movie];

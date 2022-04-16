@@ -1,15 +1,6 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-// import 'package:ditonton/data/datasources/movie_local_data_source.dart';
-// import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
-// import 'package:ditonton/data/models/database_model.dart';
-// import 'package:ditonton/domain/entities/database.dart';
-// import 'package:ditonton/domain/entities/movie.dart';
-// import 'package:ditonton/domain/entities/movie_detail.dart';
-// import 'package:ditonton/domain/repositories/movie_repository.dart';
-// import 'package:ditonton/common/exception.dart';
-// import 'package:ditonton/common/failure.dart';
 import 'package:common/common.dart';
 import 'package:movie/data/datasource/movie_local_data_source.dart';
 import 'package:movie/data/datasource/movie_remote_data_source.dart';
@@ -133,7 +124,7 @@ class MovieRepositoryImpl implements MovieRepository {
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

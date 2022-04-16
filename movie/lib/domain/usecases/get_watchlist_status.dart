@@ -1,4 +1,3 @@
-// import 'package:ditonton/domain/repositories/movie_repository.dart';
 import 'package:movie/domain/repositories/movie_repository.dart';
 
 class GetWatchListStatus {

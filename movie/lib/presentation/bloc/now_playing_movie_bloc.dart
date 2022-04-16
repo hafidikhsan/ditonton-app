@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-// import 'package:ditonton/domain/entities/movie.dart';
-// import 'package:ditonton/domain/usecases/get_now_playing_movies.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movie/domain/entities/movie.dart';
 import 'package:movie/domain/usecases/get_now_playing_movies.dart';
