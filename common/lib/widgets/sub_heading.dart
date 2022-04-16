@@ -1,4 +1,3 @@
-// import 'package:ditonton/common/constants.dart';
 import 'package:common/common/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +25,7 @@ class SubHeading extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [
+              children: const [
                 Text('See More'),
                 Icon(Icons.arrow_forward_ios),
               ],
