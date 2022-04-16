@@ -1,8 +1,4 @@
-// import 'package:ditonton/common/constants.dart';
-// import 'package:ditonton/common/utils.dart';
 import 'package:common/common.dart';
-// import 'package:ditonton/presentation/bloc/watchlist_bloc.dart';
-// import 'package:ditonton/presentation/widgets/watchlist_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/presentation/bloc/watchlist_bloc.dart';
@@ -10,6 +6,8 @@ import 'package:watchlist/presentation/widgets/watchlist_card_list.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist-movie';
+
+  const WatchlistMoviesPage({Key? key}) : super(key: key);
 
   @override
   _WatchlistMoviesPageState createState() => _WatchlistMoviesPageState();
@@ -31,6 +29,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
     routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
+  @override
   void didPopNext() {
     context.read<WatchlistBloc>().add(LoadWatchlist());
   }
@@ -39,14 +38,14 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Watchlist'),
+        title: const Text('Watchlist'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<WatchlistBloc, WatchlistState>(
           builder: (context, data) {
             if (data is WatchlistLoading) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (data is WatchlistHasData) {
@@ -68,7 +67,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
               }
             } else if (data is WatchlistError) {
               return Center(
-                key: Key('error_message'),
+                key: const Key('error_message'),
                 child: Text(data.message),
               );
             } else {

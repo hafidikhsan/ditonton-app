@@ -14,7 +14,7 @@ class WatchlistLoading extends WatchlistState {}
 class WatchlistError extends WatchlistState {
   final String message;
 
-  WatchlistError(this.message);
+  const WatchlistError(this.message);
 
   @override
   List<Object> get props => [message];
@@ -23,7 +23,7 @@ class WatchlistError extends WatchlistState {
 class WatchlistHasData extends WatchlistState {
   final List<Database> result;
 
-  WatchlistHasData(this.result);
+  const WatchlistHasData(this.result);
 
   @override
   List<Object> get props => [result];

@@ -1,6 +1,3 @@
-// import 'package:ditonton/domain/entities/database.dart';
-// import 'package:ditonton/domain/entities/movie_detail.dart';
-// import 'package:ditonton/domain/entities/series_detail.dart';
 import 'package:equatable/equatable.dart';
 import 'package:watchlist/domain/entities/database.dart';
 import 'package:movie/movie.dart';
@@ -13,7 +10,7 @@ class DatabaseModel extends Equatable {
   final String? overview;
   final int isMovie;
 
-  DatabaseModel({
+  const DatabaseModel({
     required this.id,
     required this.title,
     required this.posterPath,

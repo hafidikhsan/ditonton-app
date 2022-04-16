@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Database extends Equatable {
-  Database({
+  const Database({
     required this.id,
     required this.title,
     required this.posterPath,

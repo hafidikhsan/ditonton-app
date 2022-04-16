@@ -1,9 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:ditonton/common/constants.dart';
 import 'package:common/common.dart';
-// import 'package:ditonton/domain/entities/database.dart';
-// import 'package:ditonton/presentation/pages/movie_detail_page.dart';
-// import 'package:ditonton/presentation/pages/series_detail_page.dart';
 import 'package:movie/movie.dart';
 import 'package:series/series.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +8,7 @@ import 'package:watchlist/domain/entities/database.dart';
 class WatchlistCard extends StatelessWidget {
   final Database watchlist;
 
-  WatchlistCard(this.watchlist);
+  const WatchlistCard(this.watchlist, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +47,7 @@ class WatchlistCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
                       watchlist.overview ?? '-',
                       maxLines: 2,
@@ -70,12 +66,12 @@ class WatchlistCard extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: '$BASE_IMAGE_URL${watchlist.posterPath}',
                   width: 80,
-                  placeholder: (context, url) => Center(
+                  placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
             ),
           ],
