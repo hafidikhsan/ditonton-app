@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:common/common.dart';
 import 'package:dartz/dartz.dart';
@@ -101,6 +102,29 @@ void main() {
       expect(result,
           equals(Left(ConnectionFailure('Failed to connect to the network'))));
     });
+
+    test('should return certificate failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getNowPlayingSeries())
+          .thenThrow(const TlsException('Failed to connect to the network'));
+      // act
+      final result = await repository.getNowPlayingSeries();
+      // assert
+      verify(mockRemoteDataSource.getNowPlayingSeries());
+      expect(
+          result,
+          equals(Left(CommonFailure(
+              'Certificated not valid\nFailed to connect to the network'))));
+    });
+    test('should return error failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getNowPlayingSeries()).thenThrow(e);
+      // act
+      final result = await repository.getNowPlayingSeries();
+      // assert
+      verify(mockRemoteDataSource.getNowPlayingSeries());
+      expect(result, equals(Left(CommonFailure(e.toString()))));
+    });
   });
 
   group('Popular Movies', () {
@@ -141,6 +165,29 @@ void main() {
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));
     });
+
+    test('should return certificate failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getPopularSeries())
+          .thenThrow(const TlsException('Failed to connect to the network'));
+      // act
+      final result = await repository.getPopularSeries();
+      // assert
+      verify(mockRemoteDataSource.getPopularSeries());
+      expect(
+          result,
+          equals(Left(CommonFailure(
+              'Certificated not valid\nFailed to connect to the network'))));
+    });
+    test('should return error failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getPopularSeries()).thenThrow(e);
+      // act
+      final result = await repository.getPopularSeries();
+      // assert
+      verify(mockRemoteDataSource.getPopularSeries());
+      expect(result, equals(Left(CommonFailure(e.toString()))));
+    });
   });
 
   group('Top Rated Movies', () {
@@ -180,6 +227,29 @@ void main() {
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));
     });
+
+    test('should return certificate failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getTopRatedSeries())
+          .thenThrow(const TlsException('Failed to connect to the network'));
+      // act
+      final result = await repository.getTopRatedSeries();
+      // assert
+      verify(mockRemoteDataSource.getTopRatedSeries());
+      expect(
+          result,
+          equals(Left(CommonFailure(
+              'Certificated not valid\nFailed to connect to the network'))));
+    });
+    test('should return error failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getTopRatedSeries()).thenThrow(e);
+      // act
+      final result = await repository.getTopRatedSeries();
+      // assert
+      verify(mockRemoteDataSource.getTopRatedSeries());
+      expect(result, equals(Left(CommonFailure(e.toString()))));
+    });
   });
 
   group('Get Movie Detail', () {
@@ -210,7 +280,7 @@ void main() {
       final result = await repository.getSeriesDetail(tId);
       // assert
       verify(mockRemoteDataSource.getSeriesDetail(tId));
-      expect(result, equals(Right(testSeriesDetail)));
+      expect(result, equals(const Right(testSeriesDetail)));
     });
 
     test(
@@ -238,6 +308,29 @@ void main() {
       verify(mockRemoteDataSource.getSeriesDetail(tId));
       expect(result,
           equals(Left(ConnectionFailure('Failed to connect to the network'))));
+    });
+
+    test('should return certificate failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getSeriesDetail(tId))
+          .thenThrow(const TlsException('Failed to connect to the network'));
+      // act
+      final result = await repository.getSeriesDetail(tId);
+      // assert
+      verify(mockRemoteDataSource.getSeriesDetail(tId));
+      expect(
+          result,
+          equals(Left(CommonFailure(
+              'Certificated not valid\nFailed to connect to the network'))));
+    });
+    test('should return error failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getSeriesDetail(tId)).thenThrow(e);
+      // act
+      final result = await repository.getSeriesDetail(tId);
+      // assert
+      verify(mockRemoteDataSource.getSeriesDetail(tId));
+      expect(result, equals(Left(CommonFailure(e.toString()))));
     });
   });
 
@@ -298,6 +391,29 @@ void main() {
       expect(result,
           equals(Left(ConnectionFailure('Failed to connect to the network'))));
     });
+
+    test('should return certificate failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getSeriesEpisodes(tId, tId))
+          .thenThrow(const TlsException('Failed to connect to the network'));
+      // act
+      final result = await repository.getSeriesEpisodes(tId, tId);
+      // assert
+      verify(mockRemoteDataSource.getSeriesEpisodes(tId, tId));
+      expect(
+          result,
+          equals(Left(CommonFailure(
+              'Certificated not valid\nFailed to connect to the network'))));
+    });
+    test('should return error failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getSeriesEpisodes(tId, tId)).thenThrow(e);
+      // act
+      final result = await repository.getSeriesEpisodes(tId, tId);
+      // assert
+      verify(mockRemoteDataSource.getSeriesEpisodes(tId, tId));
+      expect(result, equals(Left(CommonFailure(e.toString()))));
+    });
   });
 
   group('Get Movie Recommendations', () {
@@ -344,6 +460,29 @@ void main() {
       expect(result,
           equals(Left(ConnectionFailure('Failed to connect to the network'))));
     });
+
+    test('should return certificate failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getSeriesRecommendations(tId))
+          .thenThrow(const TlsException('Failed to connect to the network'));
+      // act
+      final result = await repository.getSeriesRecommendations(tId);
+      // assert
+      verify(mockRemoteDataSource.getSeriesRecommendations(tId));
+      expect(
+          result,
+          equals(Left(CommonFailure(
+              'Certificated not valid\nFailed to connect to the network'))));
+    });
+    test('should return error failure', () async {
+      // arrange
+      when(mockRemoteDataSource.getSeriesRecommendations(tId)).thenThrow(e);
+      // act
+      final result = await repository.getSeriesRecommendations(tId);
+      // assert
+      verify(mockRemoteDataSource.getSeriesRecommendations(tId));
+      expect(result, equals(Left(CommonFailure(e.toString()))));
+    });
   });
 
   group('Seach Movies', () {
@@ -384,6 +523,29 @@ void main() {
       // assert
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));
+    });
+
+    test('should return certificate failure', () async {
+      // arrange
+      when(mockRemoteDataSource.searchSeries(tQuery))
+          .thenThrow(const TlsException('Failed to connect to the network'));
+      // act
+      final result = await repository.searchSeries(tQuery);
+      // assert
+      verify(mockRemoteDataSource.searchSeries(tQuery));
+      expect(
+          result,
+          equals(Left(CommonFailure(
+              'Certificated not valid\nFailed to connect to the network'))));
+    });
+    test('should return error failure', () async {
+      // arrange
+      when(mockRemoteDataSource.searchSeries(tQuery)).thenThrow(e);
+      // act
+      final result = await repository.searchSeries(tQuery);
+      // assert
+      verify(mockRemoteDataSource.searchSeries(tQuery));
+      expect(result, equals(Left(CommonFailure(e.toString()))));
     });
   });
 

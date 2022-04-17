@@ -60,7 +60,7 @@ class _SeriesDetailPageState extends State<SeriesDetailPage> {
           } else {
             return Center(
               child: Text(
-                'Halaman Tidak Ditemukan',
+                'Page Not Found',
                 style: kHeading6,
               ),
             );
@@ -149,10 +149,13 @@ class DetailContent extends StatelessWidget {
                                   );
                                 }
                               },
-                              listenWhen: (previous, current) =>
-                                  previous.messageWatchlist !=
-                                      current.messageWatchlist &&
-                                  current.messageWatchlist != '',
+                              listenWhen: (previous, current) {
+                                final checkMassage =
+                                    previous.messageWatchlist !=
+                                            current.messageWatchlist &&
+                                        previous.messageWatchlist != '';
+                                return checkMassage;
+                              },
                               child: ElevatedButton(
                                 onPressed: () async {
                                   if (!isAddedWatchlist) {

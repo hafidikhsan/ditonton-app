@@ -100,6 +100,19 @@ void main() {
     expect(progressFinder, findsOneWidget);
   });
 
+  testWidgets('Page should display container when Empty',
+      (WidgetTester tester) async {
+    when(() => topRatedMovieBloc.stream)
+        .thenAnswer((_) => Stream.value(TopRatedMovieEmpty()));
+    when(() => topRatedMovieBloc.state).thenReturn(TopRatedMovieEmpty());
+
+    await tester.pumpWidget(_makeTestableWidget(const TopRatedMoviesPage()));
+
+    final progressFinder = find.byType(Container);
+
+    expect(progressFinder, findsOneWidget);
+  });
+
   testWidgets('Page should display text with message when Error',
       (WidgetTester tester) async {
     when(() => topRatedMovieBloc.stream).thenAnswer(

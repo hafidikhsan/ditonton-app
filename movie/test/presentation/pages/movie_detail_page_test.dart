@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:movie/domain/entities/movie.dart';
 import 'package:movie/presentation/bloc/movie_detail_bloc.dart';
 import 'package:movie/presentation/pages/movie_detail_page.dart';
 
@@ -13,13 +14,11 @@ class MockMovieDetailBloc extends MockBloc<MovieDetailEvent, MovieDetailState>
     implements MovieDetailBloc {}
 
 void main() {
-  late MovieDetailBloc movieDetailBloc;
+  late MockMovieDetailBloc movieDetailBloc;
 
   setUp(() {
     movieDetailBloc = MockMovieDetailBloc();
   });
-
-  tearDown(() => reset(movieDetailBloc));
 
   Widget _makeTestableWidget(Widget body) {
     return BlocProvider<MovieDetailBloc>.value(
@@ -49,6 +48,27 @@ void main() {
     final progressFinder = find.byType(CircularProgressIndicator);
 
     expect(progressFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display progress bar when loading recomendation',
+      (WidgetTester tester) async {
+    when(() => movieDetailBloc.state).thenReturn(const MovieDetailState(
+      isAdd: false,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Loading,
+      resultMovie: testMovieDetail,
+      resultMovieState: RequestState.Loaded,
+    ));
+
+    await tester.pumpWidget(_makeTestableWidget(const MovieDetailPage(
+      id: 1,
+    )));
+
+    final progressFinder = find.byType(CircularProgressIndicator);
+
+    expect(progressFinder, findsWidgets);
   });
 
   testWidgets(
@@ -91,59 +111,87 @@ void main() {
     expect(watchlistButtonIcon, findsOneWidget);
   });
 
-  // testWidgets('Watchlist button should display Snackbar when add to watchlist',
-  //     (WidgetTester tester) async {
-  //   when(() => movieDetailBloc.state).thenReturn(MovieDetailState(
-  //     isAdd: false,
-  //     message: '',
-  //     messageWatchlist: '',
-  //     recomment: [],
-  //     recommentState: RequestState.Loaded,
-  //     resultMovie: testMovieDetail,
-  //     resultMovieState: RequestState.Loaded,
-  //   ));
+  testWidgets('Page should display Failure when Error',
+      (WidgetTester tester) async {
+    when(() => movieDetailBloc.state).thenReturn(const MovieDetailState(
+      isAdd: false,
+      message: 'Failure',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Loading,
+      resultMovie: testMovieDetail,
+      resultMovieState: RequestState.Error,
+    ));
 
-  //   final watchlistButton = find.byType(ElevatedButton);
+    await tester.pumpWidget(_makeTestableWidget(const MovieDetailPage(
+      id: 1,
+    )));
 
-  //   await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
+    final progressFinder = find.text("Failure");
 
-  //   expect(watchlistButton, findsOneWidget);
-  //   expect(find.byIcon(Icons.add), findsOneWidget);
+    expect(progressFinder, findsOneWidget);
+  });
 
-  //   await tester.tap(watchlistButton);
-  //   await tester.pump();
+  testWidgets('Page should display Failure when Error Recomendation',
+      (WidgetTester tester) async {
+    when(() => movieDetailBloc.state).thenReturn(const MovieDetailState(
+      isAdd: false,
+      message: 'Failure.',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Error,
+      resultMovie: testMovieDetail,
+      resultMovieState: RequestState.Loaded,
+    ));
 
-  //   expect(find.byIcon(Icons.add), findsNothing);
-  //   // final watchlistButtonIcon = find.byIcon(Icons.check);
+    await tester.pumpWidget(_makeTestableWidget(const MovieDetailPage(
+      id: 1,
+    )));
 
-  //   // expect(find.byType(SnackBar), findsOneWidget);
-  //   // expect(watchlistButtonIcon, findsOneWidget);
-  //   // expect(find.text('Added to Watchlist'), findsOneWidget);
-  // });
+    final progressFinder = find.text("Failure.");
 
-  // testWidgets(
-  //     'Watchlist button should display AlertDialog when add to watchlist failed',
-  //     (WidgetTester tester) async {
-  //   when(() => movieDetailBloc.state).thenReturn(MovieDetailState(
-  //     isAdd: false,
-  //     message: '',
-  //     messageWatchlist: 'Failed',
-  //     recomment: [],
-  //     recommentState: RequestState.Loaded,
-  //     resultMovie: testMovieDetail,
-  //     resultMovieState: RequestState.Loaded,
-  //   ));
+    expect(progressFinder, findsOneWidget);
+  });
 
-  //   final watchlistButton = find.byType(ElevatedButton);
+  testWidgets('Page should display Page Not Found when Empty',
+      (WidgetTester tester) async {
+    when(() => movieDetailBloc.state).thenReturn(const MovieDetailState(
+      isAdd: false,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Empty,
+      resultMovie: testMovieDetail,
+      resultMovieState: RequestState.Empty,
+    ));
 
-  //   await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
+    await tester.pumpWidget(_makeTestableWidget(const MovieDetailPage(
+      id: 1,
+    )));
 
-  //   expect(find.byIcon(Icons.add), findsOneWidget);
+    final progressFinder = find.text("Page Not Found");
 
-  //   await tester.tap(watchlistButton);
-  //   await tester.pump();
+    expect(progressFinder, findsOneWidget);
+  });
 
-  //   expect(find.byType(AlertDialog), findsOneWidget);
-  //   expect(find.text('Failed'), findsOneWidget);
-  // });
+  testWidgets('Page should display Container when Empty Recommendation',
+      (WidgetTester tester) async {
+    when(() => movieDetailBloc.state).thenReturn(const MovieDetailState(
+      isAdd: false,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Empty,
+      resultMovie: testMovieDetail,
+      resultMovieState: RequestState.Loaded,
+    ));
+
+    await tester.pumpWidget(_makeTestableWidget(const MovieDetailPage(
+      id: 1,
+    )));
+
+    final progressFinder = find.byType(Container);
+
+    expect(progressFinder, findsWidgets);
+  });
 }

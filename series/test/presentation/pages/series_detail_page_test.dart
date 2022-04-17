@@ -4,19 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:series/domain/entities/episodes.dart';
+import 'package:series/domain/entities/series.dart';
+import 'package:series/domain/entities/series_detail.dart';
 import 'package:series/presentation/bloc/series_detail_bloc.dart';
 import 'package:series/presentation/pages/series_detail_page.dart';
 
 import '../../dummy_data/dummy_objects.dart';
 
-class MockMovieDetailBloc extends MockBloc<SeriesDetailEvent, SeriesDetailState>
+class MockSeriesDetailBloc
+    extends MockBloc<SeriesDetailEvent, SeriesDetailState>
     implements SeriesDetailBloc {}
 
 void main() {
-  late SeriesDetailBloc seriesDetailBloc;
+  late MockSeriesDetailBloc seriesDetailBloc;
 
   setUp(() {
-    seriesDetailBloc = MockMovieDetailBloc();
+    seriesDetailBloc = MockSeriesDetailBloc();
   });
 
   tearDown(() => reset(seriesDetailBloc));
@@ -29,6 +33,69 @@ void main() {
       ),
     );
   }
+
+  const seriesDetailState = SeriesDetailState(
+    isAdd: false,
+    message: '',
+    messageWatchlist: '',
+    recomment: [],
+    recommentState: RequestState.Loading,
+    resultSeries: null,
+    resultSeriesState: RequestState.Loading,
+    episode: [],
+    episodeState: RequestState.Empty,
+    id: 1,
+    season: [],
+    seasonValue: 1,
+  );
+
+  const tId = 1;
+
+  const tSeries = Series(
+    backdropPath: 'backdropPath',
+    firstAir: 'firstAir',
+    genreIds: [],
+    id: 1,
+    name: 'name',
+    originalName: 'originalName',
+    overview: 'overview',
+    popularity: 1,
+    posterPath: 'posterPath',
+    voteAverage: 1,
+    voteCount: 1,
+  );
+
+  const tSeriesList = <Series>[tSeries];
+
+  const tSeriesDetail = SeriesDetail(
+    adult: false,
+    backdropPath: 'backdropPath',
+    firstAir: 'firstAir',
+    genres: [],
+    id: 1,
+    name: 'name',
+    originalName: 'originalName',
+    overview: 'overview',
+    popularity: 1,
+    posterPath: 'posterPath',
+    voteAverage: 1,
+    voteCount: 1,
+    seasons: [1],
+  );
+
+  const tEpisode = Episodes(
+    airDate: 'airDate',
+    episodeNumber: 1,
+    id: 1,
+    name: 'name',
+    overview: 'overview',
+    seasonNumber: 1,
+    stillPath: 'stillPath',
+    voteAverage: 1,
+    voteCount: 1,
+  );
+
+  const tEpisodes = <Episodes>[tEpisode];
 
   testWidgets('Page should display progress bar when loading',
       (WidgetTester tester) async {
@@ -57,8 +124,34 @@ void main() {
     expect(progressFinder, findsOneWidget);
   });
 
-  testWidgets(
-      "'Watchlist button should display add icon when series not added to watchlist'",
+  testWidgets('Page should display progress bar when recomendation loading',
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state.copyWith())
+        .thenReturn(const SeriesDetailState(
+      isAdd: false,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Loading,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Loaded,
+      episode: [],
+      episodeState: RequestState.Loading,
+      id: 1,
+      seasonValue: 1,
+      season: [],
+    ));
+
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(
+      id: 1,
+    )));
+
+    final progressFinder = find.byType(CircularProgressIndicator);
+
+    expect(progressFinder, findsWidgets);
+  });
+
+  testWidgets('Page should display progress bar when episode loading',
       (WidgetTester tester) async {
     when(() => seriesDetailBloc.state.copyWith())
         .thenReturn(const SeriesDetailState(
@@ -70,9 +163,37 @@ void main() {
       resultSeries: testSeriesDetail,
       resultSeriesState: RequestState.Loaded,
       episode: [],
-      episodeState: RequestState.Loaded,
+      episodeState: RequestState.Loading,
       id: 1,
-      seasonValue: 0,
+      seasonValue: 1,
+      season: [],
+    ));
+
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(
+      id: 1,
+    )));
+
+    final progressFinder = find.byType(CircularProgressIndicator);
+
+    expect(progressFinder, findsWidgets);
+  });
+
+  testWidgets(
+      "Watchlist button should display add icon when series not added to watchlist",
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state.copyWith())
+        .thenReturn(const SeriesDetailState(
+      isAdd: false,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Loaded,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Loaded,
+      episode: [],
+      episodeState: RequestState.Loading,
+      id: 1,
+      seasonValue: 1,
       season: [],
     ));
 
@@ -109,59 +230,159 @@ void main() {
     expect(watchlistButtonIcon, findsOneWidget);
   });
 
-  // testWidgets(
-  //     'Watchlist button should display Snackbar when added to watchlist',
-  //     (WidgetTester tester) async {
-  //   when(mockNotifier.seriesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.series).thenReturn(testSeriesDetail);
-  //   when(mockNotifier.episodesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.seriesEpisodes).thenReturn(<Episodes>[]);
-  //   when(mockNotifier.seasonValue).thenReturn(0);
-  //   when(mockNotifier.season).thenReturn(<int>[]);
-  //   when(mockNotifier.recommendationState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.seriesRecommendations).thenReturn(<Series>[]);
-  //   when(mockNotifier.isAddedToWatchlist).thenReturn(false);
-  //   when(mockNotifier.id).thenReturn(1);
-  //   when(mockNotifier.watchlistMessage).thenReturn('Added to Watchlist');
+  testWidgets('Page should display Failure when Error',
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state).thenReturn(const SeriesDetailState(
+      isAdd: true,
+      message: 'Failure',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Loaded,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Error,
+      episode: [],
+      episodeState: RequestState.Loaded,
+      id: 1,
+      seasonValue: 0,
+      season: [],
+    ));
 
-  //   final watchlistButton = find.byType(ElevatedButton);
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(
+      id: 1,
+    )));
 
-  //   await tester.pumpWidget(_makeTestableWidget(SeriesDetailPage(id: 1)));
+    final progressFinder = find.text("Failure");
 
-  //   expect(find.byIcon(Icons.add), findsOneWidget);
+    expect(progressFinder, findsOneWidget);
+  });
 
-  //   await tester.tap(watchlistButton);
-  //   await tester.pump();
+  testWidgets('Page should display Failure when Error Recomendations',
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state).thenReturn(const SeriesDetailState(
+      isAdd: true,
+      message: 'Failure',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Error,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Loaded,
+      episode: [],
+      episodeState: RequestState.Loaded,
+      id: 1,
+      seasonValue: 0,
+      season: [],
+    ));
 
-  //   expect(find.byType(SnackBar), findsOneWidget);
-  //   expect(find.text('Added to Watchlist'), findsOneWidget);
-  // });
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(
+      id: 1,
+    )));
 
-  // testWidgets(
-  //     'Watchlist button should display AlertDialog when add to watchlist failed',
-  //     (WidgetTester tester) async {
-  //   when(mockNotifier.seriesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.series).thenReturn(testSeriesDetail);
-  //   when(mockNotifier.episodesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.seriesEpisodes).thenReturn(<Episodes>[]);
-  //   when(mockNotifier.seasonValue).thenReturn(0);
-  //   when(mockNotifier.season).thenReturn(<int>[]);
-  //   when(mockNotifier.recommendationState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.seriesRecommendations).thenReturn(<Series>[]);
-  //   when(mockNotifier.isAddedToWatchlist).thenReturn(false);
-  //   when(mockNotifier.id).thenReturn(1);
-  //   when(mockNotifier.watchlistMessage).thenReturn('Failed');
+    final progressFinder = find.text("Failure");
 
-  //   final watchlistButton = find.byType(ElevatedButton);
+    expect(progressFinder, findsOneWidget);
+  });
 
-  //   await tester.pumpWidget(_makeTestableWidget(SeriesDetailPage(id: 1)));
+  testWidgets('Page should display Failure when Error Episodes',
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state).thenReturn(const SeriesDetailState(
+      isAdd: true,
+      message: 'Failure',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Loaded,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Loaded,
+      episode: [],
+      episodeState: RequestState.Error,
+      id: 1,
+      seasonValue: 0,
+      season: [],
+    ));
 
-  //   expect(find.byIcon(Icons.add), findsOneWidget);
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(
+      id: 1,
+    )));
 
-  //   await tester.tap(watchlistButton);
-  //   await tester.pump();
+    final progressFinder = find.text("Failure");
 
-  //   expect(find.byType(AlertDialog), findsOneWidget);
-  //   expect(find.text('Failed'), findsOneWidget);
-  // });
+    expect(progressFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display Page Not Found when Empty',
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state).thenReturn(const SeriesDetailState(
+      isAdd: false,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Empty,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Empty,
+      episode: [],
+      episodeState: RequestState.Empty,
+      id: 1,
+      seasonValue: 0,
+      season: [],
+    ));
+
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(
+      id: 1,
+    )));
+
+    final progressFinder = find.text("Page Not Found");
+
+    expect(progressFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display Container when Empty Recommendation',
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state).thenReturn(const SeriesDetailState(
+      isAdd: false,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Empty,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Loaded,
+      episode: [],
+      episodeState: RequestState.Empty,
+      id: 1,
+      seasonValue: 0,
+      season: [],
+    ));
+
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(
+      id: 1,
+    )));
+
+    final progressFinder = find.byType(Container);
+
+    expect(progressFinder, findsWidgets);
+  });
+
+  testWidgets('Page should display Container when Empty Episode',
+      (WidgetTester tester) async {
+    when(() => seriesDetailBloc.state).thenReturn(const SeriesDetailState(
+      isAdd: false,
+      message: '',
+      messageWatchlist: '',
+      recomment: [],
+      recommentState: RequestState.Loaded,
+      resultSeries: testSeriesDetail,
+      resultSeriesState: RequestState.Loaded,
+      episode: [],
+      episodeState: RequestState.Empty,
+      id: 1,
+      seasonValue: 0,
+      season: [],
+    ));
+
+    await tester.pumpWidget(_makeTestableWidget(const SeriesDetailPage(
+      id: 1,
+    )));
+
+    final progressFinder = find.byType(Container);
+
+    expect(progressFinder, findsWidgets);
+  });
 }

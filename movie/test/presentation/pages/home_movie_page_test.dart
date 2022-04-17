@@ -148,6 +148,12 @@ void main() {
           Stream.value(const NowPlayingMovieHasData(<Movie>[tMovieModel])));
       when(() => nowPlayingBloc.state)
           .thenReturn(const NowPlayingMovieHasData(<Movie>[tMovieModel]));
+      when(() => popularBloc.stream)
+          .thenAnswer((_) => Stream.value(PopularMovieLoading()));
+      when(() => popularBloc.state).thenReturn(PopularMovieLoading());
+      when(() => topRatedBloc.stream)
+          .thenAnswer((_) => Stream.value(TopRatedMovieLoading()));
+      when(() => topRatedBloc.state).thenReturn(TopRatedMovieLoading());
       when(() => popularBloc.stream).thenAnswer(
           (_) => Stream.value(const PopularMovieHasData(<Movie>[tMovieModel])));
       when(() => popularBloc.state)
@@ -156,16 +162,29 @@ void main() {
           Stream.value(const TopRatedMovieHasData(<Movie>[tMovieModel])));
       when(() => topRatedBloc.state)
           .thenReturn(const TopRatedMovieHasData(<Movie>[tMovieModel]));
-      when(() => popularBloc.stream)
-          .thenAnswer((_) => Stream.value(PopularMovieLoading()));
-      when(() => popularBloc.state).thenReturn(PopularMovieLoading());
-      when(() => topRatedBloc.stream)
-          .thenAnswer((_) => Stream.value(TopRatedMovieLoading()));
-      when(() => topRatedBloc.state).thenReturn(TopRatedMovieLoading());
 
       await tester.pumpWidget(_makeTestableWidget(const HomeMoviePage()));
 
       final progressFinder = find.byType(MovieList);
+
+      expect(progressFinder, findsNWidgets(3));
+    });
+
+    testWidgets('Page should display container when Empty',
+        (WidgetTester tester) async {
+      when(() => topRatedBloc.stream)
+          .thenAnswer((_) => Stream.value(TopRatedMovieEmpty()));
+      when(() => topRatedBloc.state).thenReturn(TopRatedMovieEmpty());
+      when(() => popularBloc.stream)
+          .thenAnswer((_) => Stream.value(PopularMovieEmpty()));
+      when(() => popularBloc.state).thenReturn(PopularMovieEmpty());
+      when(() => nowPlayingBloc.stream)
+          .thenAnswer((_) => Stream.value(NowPlayingMovieEmpty()));
+      when(() => nowPlayingBloc.state).thenReturn(NowPlayingMovieEmpty());
+
+      await tester.pumpWidget(_makeTestableWidget(const HomeMoviePage()));
+
+      final progressFinder = find.byType(Container);
 
       expect(progressFinder, findsWidgets);
     });

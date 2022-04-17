@@ -1,6 +1,6 @@
 part of 'search_series_bloc.dart';
 
-abstract class SearchSeriesEvent extends Equatable {
+class SearchSeriesEvent extends Equatable {
   const SearchSeriesEvent();
 
   @override

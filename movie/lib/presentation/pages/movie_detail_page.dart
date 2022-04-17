@@ -59,7 +59,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
           } else {
             return Center(
               child: Text(
-                'Halaman Tidak Ditemukan',
+                'Page Not Found',
                 style: kHeading6,
               ),
             );

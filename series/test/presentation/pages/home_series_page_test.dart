@@ -142,6 +142,12 @@ void main() {
         (_) => Stream.value(const NowPlayingSeriesHasData(<Series>[tSeries])));
     when(() => nowPlayingBloc.state)
         .thenReturn(const NowPlayingSeriesHasData(<Series>[tSeries]));
+    when(() => popularBloc.stream)
+        .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
+    when(() => popularBloc.state).thenReturn(PopularSeriesLoading());
+    when(() => topRatedBloc.stream)
+        .thenAnswer((_) => Stream.value(TopRatedSeriesLoading()));
+    when(() => topRatedBloc.state).thenReturn(TopRatedSeriesLoading());
     when(() => popularBloc.stream).thenAnswer(
         (_) => Stream.value(const PopularSeriesHasData(<Series>[tSeries])));
     when(() => popularBloc.state)
@@ -150,16 +156,29 @@ void main() {
         (_) => Stream.value(const TopRatedSeriesHasData(<Series>[tSeries])));
     when(() => topRatedBloc.state)
         .thenReturn(const TopRatedSeriesHasData(<Series>[tSeries]));
-    when(() => popularBloc.stream)
-        .thenAnswer((_) => Stream.value(PopularSeriesLoading()));
-    when(() => popularBloc.state).thenReturn(PopularSeriesLoading());
-    when(() => topRatedBloc.stream)
-        .thenAnswer((_) => Stream.value(TopRatedSeriesLoading()));
-    when(() => topRatedBloc.state).thenReturn(TopRatedSeriesLoading());
 
     await tester.pumpWidget(_makeTestableWidget(const HomeSeriesPage()));
 
     final progressFinder = find.byType(SeriesList);
+
+    expect(progressFinder, findsNWidgets(3));
+  });
+
+  testWidgets('Page should display container when Empty',
+      (WidgetTester tester) async {
+    when(() => topRatedBloc.stream)
+        .thenAnswer((_) => Stream.value(TopRatedSeriesEmpty()));
+    when(() => topRatedBloc.state).thenReturn(TopRatedSeriesEmpty());
+    when(() => popularBloc.stream)
+        .thenAnswer((_) => Stream.value(PopularSeriesEmpty()));
+    when(() => popularBloc.state).thenReturn(PopularSeriesEmpty());
+    when(() => nowPlayingBloc.stream)
+        .thenAnswer((_) => Stream.value(NowPlayingSeriesEmpty()));
+    when(() => nowPlayingBloc.state).thenReturn(NowPlayingSeriesEmpty());
+
+    await tester.pumpWidget(_makeTestableWidget(const HomeSeriesPage()));
+
+    final progressFinder = find.byType(Container);
 
     expect(progressFinder, findsWidgets);
   });
