@@ -19,7 +19,6 @@ class AboutPage extends StatelessWidget {
                   child: Center(
                     child: Image.asset(
                       'assets/circle-g.png',
-                      package: 'ditonton',
                       width: 128,
                     ),
                   ),
