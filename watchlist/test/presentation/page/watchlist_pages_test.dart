@@ -25,7 +25,7 @@ void main() {
     watchlistBloc = MockBloc();
   });
 
-  final testWatchlistMovie = Database(
+  const testWatchlistMovie = Database(
     id: 1,
     title: 'title',
     posterPath: 'posterPath',
@@ -48,7 +48,7 @@ void main() {
         .thenAnswer((_) => Stream.value(WatchlistLoading()));
     when(() => watchlistBloc.state).thenReturn(WatchlistLoading());
 
-    await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const WatchlistMoviesPage()));
 
     final progressFinder = find.byType(CircularProgressIndicator);
     final centerFinder = find.byType(Center);
@@ -67,7 +67,7 @@ void main() {
     when(() => watchlistBloc.state)
         .thenReturn(const WatchlistHasData(<Database>[]));
 
-    await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const WatchlistMoviesPage()));
 
     final progressFinder = find.byType(Center);
 
@@ -79,12 +79,12 @@ void main() {
     when(() => watchlistBloc.stream)
         .thenAnswer((_) => Stream.value(WatchlistLoading()));
     when(() => watchlistBloc.state).thenReturn(WatchlistLoading());
-    when(() => watchlistBloc.stream).thenAnswer(
-        (_) => Stream.value(WatchlistHasData(<Database>[testWatchlistMovie])));
+    when(() => watchlistBloc.stream).thenAnswer((_) =>
+        Stream.value(const WatchlistHasData(<Database>[testWatchlistMovie])));
     when(() => watchlistBloc.state)
-        .thenReturn(WatchlistHasData(<Database>[testWatchlistMovie]));
+        .thenReturn(const WatchlistHasData(<Database>[testWatchlistMovie]));
 
-    await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const WatchlistMoviesPage()));
 
     final progressFinder = find.byType(ListView);
 
@@ -96,12 +96,12 @@ void main() {
     when(() => watchlistBloc.stream)
         .thenAnswer((_) => Stream.value(WatchlistLoading()));
     when(() => watchlistBloc.state).thenReturn(WatchlistLoading());
-    when(() => watchlistBloc.stream).thenAnswer(
-        (_) => Stream.value(WatchlistHasData(<Database>[testWatchlistMovie])));
+    when(() => watchlistBloc.stream).thenAnswer((_) =>
+        Stream.value(const WatchlistHasData(<Database>[testWatchlistMovie])));
     when(() => watchlistBloc.state)
-        .thenReturn(WatchlistHasData(<Database>[testWatchlistMovie]));
+        .thenReturn(const WatchlistHasData(<Database>[testWatchlistMovie]));
 
-    await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const WatchlistMoviesPage()));
 
     final cardFinder = find.byType(WatchlistCard);
     final textFinder = find.text("Watchlist");
@@ -121,7 +121,7 @@ void main() {
 
     final textFinder = find.byKey(const Key('error_message'));
 
-    await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const WatchlistMoviesPage()));
 
     expect(textFinder, findsOneWidget);
   });
@@ -133,7 +133,7 @@ void main() {
 
     final containerFinder = find.byType(Container);
 
-    await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+    await tester.pumpWidget(_makeTestableWidget(const WatchlistMoviesPage()));
 
     expect(containerFinder, findsOneWidget);
   });

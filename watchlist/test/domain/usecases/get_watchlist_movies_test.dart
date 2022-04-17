@@ -10,7 +10,7 @@ void main() {
   late GetWatchlist usecase;
   late MockMovieRepository mockMovieRepository;
 
-  final testMovie = Database(
+  const testMovie = Database(
     id: 557,
     overview:
         'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',

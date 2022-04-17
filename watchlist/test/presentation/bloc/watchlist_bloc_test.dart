@@ -15,7 +15,7 @@ void main() {
   late WatchlistBloc watchlistBloc;
   late MockGetWatchlist mockWatchlist;
 
-  final testWatchlistMovie = Database(
+  const testWatchlistMovie = Database(
     id: 1,
     title: 'title',
     posterPath: 'posterPath',
@@ -36,7 +36,7 @@ void main() {
     'should get data from the usecase',
     build: () {
       when(mockWatchlist.execute())
-          .thenAnswer((_) async => Right([testWatchlistMovie]));
+          .thenAnswer((_) async => const Right([testWatchlistMovie]));
       return watchlistBloc;
     },
     act: (bloc) => bloc.add(LoadWatchlist()),
@@ -49,7 +49,7 @@ void main() {
     'should change state to loading when usecase is called',
     build: () {
       when(mockWatchlist.execute())
-          .thenAnswer((_) async => Right([testWatchlistMovie]));
+          .thenAnswer((_) async => const Right([testWatchlistMovie]));
       return watchlistBloc;
     },
     act: (bloc) => bloc.emit(WatchlistLoading()),
@@ -62,13 +62,13 @@ void main() {
     'Should emit [Loading, HasData] when data is gotten successfully',
     build: () {
       when(mockWatchlist.execute())
-          .thenAnswer((_) async => Right([testWatchlistMovie]));
+          .thenAnswer((_) async => const Right([testWatchlistMovie]));
       return watchlistBloc;
     },
     act: (bloc) => bloc.add(LoadWatchlist()),
     expect: () => [
       WatchlistLoading(),
-      WatchlistHasData([testWatchlistMovie]),
+      const WatchlistHasData([testWatchlistMovie]),
     ],
     verify: (bloc) {
       verify(mockWatchlist.execute());

@@ -10,7 +10,7 @@ void main() {
   late SaveWatchlistSeries usecase;
   late MockSeriesRepository mockSeriesRepository;
 
-  final testSeriesDetail = series.SeriesDetail(
+  const testSeriesDetail = series.SeriesDetail(
     adult: false,
     backdropPath: 'backdropPath',
     genres: [series.Genre(id: 1, name: 'Action')],
@@ -23,7 +23,7 @@ void main() {
     name: 'title',
     originalName: 'Original Name',
     popularity: 1,
-    seasons: const [],
+    seasons: [],
   );
 
   setUp(() {

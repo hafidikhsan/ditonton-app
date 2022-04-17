@@ -54,7 +54,7 @@ void main() {
 
   testWidgets('Page should display image, text, and icon',
       (WidgetTester tester) async {
-    await tester.pumpWidget(_makeTestableWidget(AboutPage()));
+    await tester.pumpWidget(_makeTestableWidget(const AboutPage()));
 
     final imageFinder = find.byType(Image);
     final iconFinder = find.byIcon(Icons.arrow_back);

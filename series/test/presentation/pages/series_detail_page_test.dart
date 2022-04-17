@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:series/domain/entities/episodes.dart';
-import 'package:series/domain/entities/series.dart';
-import 'package:series/domain/entities/series_detail.dart';
 import 'package:series/presentation/bloc/series_detail_bloc.dart';
 import 'package:series/presentation/pages/series_detail_page.dart';
 
@@ -33,69 +30,6 @@ void main() {
       ),
     );
   }
-
-  const seriesDetailState = SeriesDetailState(
-    isAdd: false,
-    message: '',
-    messageWatchlist: '',
-    recomment: [],
-    recommentState: RequestState.Loading,
-    resultSeries: null,
-    resultSeriesState: RequestState.Loading,
-    episode: [],
-    episodeState: RequestState.Empty,
-    id: 1,
-    season: [],
-    seasonValue: 1,
-  );
-
-  const tId = 1;
-
-  const tSeries = Series(
-    backdropPath: 'backdropPath',
-    firstAir: 'firstAir',
-    genreIds: [],
-    id: 1,
-    name: 'name',
-    originalName: 'originalName',
-    overview: 'overview',
-    popularity: 1,
-    posterPath: 'posterPath',
-    voteAverage: 1,
-    voteCount: 1,
-  );
-
-  const tSeriesList = <Series>[tSeries];
-
-  const tSeriesDetail = SeriesDetail(
-    adult: false,
-    backdropPath: 'backdropPath',
-    firstAir: 'firstAir',
-    genres: [],
-    id: 1,
-    name: 'name',
-    originalName: 'originalName',
-    overview: 'overview',
-    popularity: 1,
-    posterPath: 'posterPath',
-    voteAverage: 1,
-    voteCount: 1,
-    seasons: [1],
-  );
-
-  const tEpisode = Episodes(
-    airDate: 'airDate',
-    episodeNumber: 1,
-    id: 1,
-    name: 'name',
-    overview: 'overview',
-    seasonNumber: 1,
-    stillPath: 'stillPath',
-    voteAverage: 1,
-    voteCount: 1,
-  );
-
-  const tEpisodes = <Episodes>[tEpisode];
 
   testWidgets('Page should display progress bar when loading',
       (WidgetTester tester) async {

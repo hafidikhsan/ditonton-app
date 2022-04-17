@@ -13,7 +13,7 @@ void main() {
     title: 'title',
   );
 
-  final tDatabase = Database(
+  const tDatabase = Database(
     id: 1,
     isMovie: 1,
     overview: 'overview.',
@@ -45,7 +45,7 @@ void main() {
     "title": 'title',
   };
 
-  final testMovieDetail = movie.MovieDetail(
+  const testMovieDetail = movie.MovieDetail(
     adult: false,
     backdropPath: 'backdropPath',
     genres: [movie.Genre(id: 1, name: 'Action')],
@@ -60,7 +60,7 @@ void main() {
     voteCount: 1,
   );
 
-  final testSeriesDetail = series.SeriesDetail(
+  const testSeriesDetail = series.SeriesDetail(
     adult: false,
     backdropPath: 'backdropPath',
     genres: [series.Genre(id: 1, name: 'Action')],

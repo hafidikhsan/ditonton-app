@@ -10,7 +10,7 @@ void main() {
   late SaveWatchlist usecase;
   late MockMovieRepository mockMovieRepository;
 
-  final testMovieDetail = movie.MovieDetail(
+  const testMovieDetail = movie.MovieDetail(
     adult: false,
     backdropPath: 'backdropPath',
     genres: [movie.Genre(id: 1, name: 'Action')],
